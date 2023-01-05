@@ -3,3 +3,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::placeholder {
+  color: red;
+  opacity: 1;
+}
+
+* {
+  font-family: inter,Helvetica,Arial,sans-serif;
+  color: #161619;
+}
+
+.inner-width {
+  @apply 2xl:max-w-[1600px] w-full;
+}
+
+.nav-link {
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #f30b0b;
+}

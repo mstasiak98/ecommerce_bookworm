@@ -1,0 +1,58 @@
+:host {
+  --accordion-header-height: 50px;
+  --accordion-header-bg: hsl(0, 0%, 95%);
+  --accordion-disabled: hsl(0, 0%, 60%);
+  --accordion-border-radius: 8px;
+  width: 100%;
+}
+.accordion {
+  border: 1px solid #eae8e4;
+  border-bottom: 0;
+}
+.accordion__item .accordion__header {
+  border-bottom: 1px solid #eae8e4;
+}
+.accordion__content {
+  border-bottom: 1px solid #eae8e4;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.accordion__header {
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid transparent;
+  font-weight: 500;
+  font-size: 1.125rem;
+  height: var(--accordion-header-height);
+  cursor: pointer;
+}
+
+.accordion__toggle-btn {
+  border: none;
+  transition: transform 0.3s ease-in;
+  background: none;
+}
+
+.accordion__item.disabled .accordion__header {
+  color: var(--accordion-disabled);
+  cursor: not-allowed;
+}
+
+.accordion__toggle-btn:disabled {
+  cursor: not-allowed;
+}
+
+.accordion__toggle-btn:disabled svg path:nth-child(2) {
+  fill: var(--accordion-disabled);
+}
+
+.accordion__item.active .accordion__toggle-btn {
+  transform: rotate(180deg);
+}
+
+.accordion__toggle-btn:focus {
+  outline: none;
+}
+

@@ -15,6 +15,4 @@ export class AccordionItemDirective {
   @ContentChild(AccordionTitleDirective) customTitle: AccordionTitleDirective;
   @ContentChild(AccordionHeaderDirective)
   customHeader: AccordionHeaderDirective;
-
-  constructor(public templateRef: TemplateRef<any>) {}
 }

@@ -17,7 +17,7 @@
       [class.expanded]="expanded.has(i)"
       [@contentExpansion]="expanded.has(i) ? 'expanded' : 'collapsed'">
       <ng-container
-        *ngTemplateOutlet="item?.content?.templateRef"></ng-container>
+        *ngTemplateOutlet="(item?.content)!.templateRef"></ng-container>
     </div>
   </div>
 </section>
