@@ -1,0 +1,21 @@
+<section class="tab-menu">
+  <div class="flex flex-row justify-center">
+    <div
+      *ngFor="let item of items; index as i"
+      class="tab-menu__item"
+      [class.active]="activeTab === i"
+      (click)="toggleTab(i)">
+      {{ item.title }}
+    </div>
+  </div>
+  <hr />
+</section>
+<div class="mt-12 flex flex-col px-8 w-3/4 mx-auto">
+  <div
+    *ngFor="let item of items; index as i"
+    class="tab-menu__content"
+    [class.expanded]="activeTab === i"
+    [@contentExpansion]="activeTab === i ? 'expanded' : 'collapsed'">
+    <ng-container *ngTemplateOutlet="item.content.templateRef"></ng-container>
+  </div>
+</div>

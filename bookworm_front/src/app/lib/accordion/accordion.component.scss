@@ -5,18 +5,16 @@
   --accordion-border-radius: 8px;
   width: 100%;
 }
-.accordion {
+
+.accordion__item {
   border: 1px solid #eae8e4;
   border-bottom: 0;
 }
-.accordion__item .accordion__header {
+
+.accordion__item:last-child {
   border-bottom: 1px solid #eae8e4;
 }
-.accordion__content {
-  border-bottom: 1px solid #eae8e4;
-  font-size: 0.875rem;
-  font-weight: 400;
-}
+
 .accordion__header {
   display: flex;
   padding: 2rem;

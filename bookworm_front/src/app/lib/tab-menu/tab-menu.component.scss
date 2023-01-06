@@ -1,0 +1,31 @@
+
+.tab-menu {
+  overflow: auto;
+}
+
+.tab-menu__item {
+  cursor: pointer;
+  display: block;
+  padding: 1rem;
+  background: transparent;
+  color: #7c6e65;
+  font-weight: 500;
+}
+
+.tab-menu__item.active {
+  color: black !important;
+  border-bottom: 2px solid black;
+}
+
+hr {
+  border: none;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid #eae8e4;
+  }
+}

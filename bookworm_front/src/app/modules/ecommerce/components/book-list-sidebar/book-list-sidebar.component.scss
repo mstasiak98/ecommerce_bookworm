@@ -1,0 +1,12 @@
+.product-list-sidebar {
+  font-weight: 400;
+  font-size: 14px;
+  padding: 0 2.5rem 2rem 2rem;
+
+  li {
+    @apply py-1.5 flex justify-between;
+  }
+  a {
+    @apply hover:text-[#f30b0b];
+  }
+}

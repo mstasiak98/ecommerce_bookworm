@@ -2,22 +2,57 @@
   <app-accordion [collapsing]="false">
     <accordion-item title="Categories">
       <ng-template appAccordionContent>
-        <div class="p-4">A simple and customizable accordion component.</div>
+        <div class="product-list-sidebar">
+          <ul class="list-none">
+            <li *ngFor="let cat of categories; index as i">
+              <a href="#">{{ cat.name }}</a>
+              <span>({{ cat.extra }})</span>
+            </li>
+          </ul>
+        </div>
       </ng-template>
     </accordion-item>
     <accordion-item title="Author">
       <ng-template appAccordionContent>
-        <div class="p-4">A simple and customizable accordion component.</div>
+        <div class="product-list-sidebar">
+          <ul class="list-none">
+            <li *ngFor="let author of authors; index as i">
+              <a href="#">{{ author.name }}</a>
+              <span>({{ author.extra }})</span>
+            </li>
+          </ul>
+        </div>
       </ng-template>
     </accordion-item>
     <accordion-item title="Format">
       <ng-template appAccordionContent>
-        <div class="p-4">A simple and customizable accordion component.</div>
+        <div class="product-list-sidebar">
+          <ul class="list-none">
+            <li *ngFor="let format of formats; index as i">
+              <a href="#">{{ format.name }}</a>
+              <span>({{ format.extra }})</span>
+            </li>
+          </ul>
+        </div>
       </ng-template>
     </accordion-item>
     <accordion-item title="Filter by price">
       <ng-template appAccordionContent>
-        <div class="p-4">A simple and customizable accordion component.</div>
+        <div class="flex flex-col justify-center">
+          <div class="w-full pl-8 pr-12 py-8">
+            <p-slider [(ngModel)]="priceRangeValues" [range]="true"></p-slider>
+          </div>
+          <div class="p-8 pt-2 pb-8">
+            <button type="button" class="px-4 py-2 bg-[#f75454] text-white">
+              Filter
+            </button>
+            <span class="ml-4 text-sm"
+              >Price: ${{ priceRangeValues[0] }}- ${{
+                priceRangeValues[1]
+              }}</span
+            >
+          </div>
+        </div>
       </ng-template>
     </accordion-item>
   </app-accordion>
