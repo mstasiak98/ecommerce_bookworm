@@ -16,7 +16,11 @@ export class BookListComponent implements OnInit, OnDestroy {
   currentAuthorName: string;
   currentPriceFilter: PriceFilter;
   keywordSearchMode$: Subscription;
-  currentKeyword: string;
+  previousKeyword: string;
+  pageNumber: number;
+  totalElements: number = 0;
+  pageSize: number = 20;
+  totalPages: number = 0;
 
   constructor(
     private bookService: BookService,
@@ -27,8 +31,7 @@ export class BookListComponent implements OnInit, OnDestroy {
     this.keywordSearchMode$ = this.bookService
       .getKeywordSearchObservable()
       .subscribe(keyword => {
-        this.currentKeyword = keyword;
-        this.getBooks();
+        this.getBooks(keyword);
       });
     // default filter values - (max range)
     this.currentPriceFilter = { startPrice: 0, endPrice: 100 };
@@ -42,9 +45,9 @@ export class BookListComponent implements OnInit, OnDestroy {
     this.keywordSearchMode$.unsubscribe();
   }
 
-  getBooks() {
-    if (this.currentKeyword && this.currentKeyword.trim().length > 0) {
-      this.handleListBooksByKeyword();
+  getBooks(keyword?: string) {
+    if (keyword && keyword.trim().length > 0) {
+      this.handleListBooksByKeyword(keyword);
       return;
     }
 
@@ -57,44 +60,78 @@ export class BookListComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleListBooksByKeyword(): void {
+  handleListBooksByKeyword(keyword: string): void {
+    if (this.previousKeyword !== keyword) {
+      this.pageNumber = 0;
+    }
+
+    this.previousKeyword = keyword;
+
     this.bookService
-      .getBookListByKeyword(this.currentKeyword)
-      .subscribe(data => {
-        this.books = data;
-      });
+      .getBookListByKeyword(keyword, this.pageNumber)
+      .subscribe(this.processResult());
+  }
+
+  private processResult() {
+    return (data: any) => {
+      console.log('data', data);
+      this.books = data.content;
+      this.pageNumber = data.number;
+      this.pageSize = data.size;
+      this.totalElements = data.totalElements;
+      this.totalPages = data.totalPages;
+    };
   }
 
   handleListBooksByCategoryOrFormat() {
-    this.currentParameterName = this.route.snapshot.url[0].path;
+    const routeParameterName = this.route.snapshot.url[0].path;
+    const routeId = Number(this.route.snapshot.paramMap.get('id') ?? -1);
 
-    this.currentId = Number(this.route.snapshot.paramMap.get('id') ?? -1);
+    if (
+      this.currentParameterName !== routeParameterName ||
+      routeId !== this.currentId
+    ) {
+      this.pageNumber = 0;
+    }
+    [this.currentParameterName, this.currentId] = [routeParameterName, routeId];
 
     this.bookService
       .getBookList(
         this.currentId,
         this.currentParameterName,
-        this.currentPriceFilter
+        this.currentPriceFilter,
+        this.pageNumber
       )
-      .subscribe(data => {
-        this.books = data;
-      });
+      .subscribe(this.processResult());
   }
 
   handleListBookByAuthor() {
-    this.currentAuthorName = decodeURIComponent(
+    const routeAuthorName = decodeURIComponent(
       this.route.snapshot.paramMap.get('name')!.trim()
     );
 
+    if (this.currentAuthorName !== routeAuthorName) {
+      this.pageNumber = 0;
+    }
+
+    this.currentAuthorName = routeAuthorName;
+
     this.bookService
-      .getBookListByAuthor(this.currentAuthorName, this.currentPriceFilter)
-      .subscribe(data => {
-        this.books = data;
-      });
+      .getBookListByAuthor(
+        this.currentAuthorName,
+        this.currentPriceFilter,
+        this.pageNumber
+      )
+      .subscribe(this.processResult());
   }
 
   changePriceFilter(event: PriceFilter) {
     this.currentPriceFilter = event;
+    this.getBooks();
+  }
+
+  paginate(event: any) {
+    this.pageNumber = event.page;
     this.getBooks();
   }
 }

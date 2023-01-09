@@ -22,53 +22,56 @@ export class BookService {
   getBookList(
     parameterId: number,
     filterParameter: string | null,
-    priceFilter: PriceFilter
-  ): Observable<Book[]> {
+    priceFilter: PriceFilter,
+    pageNumber: number
+  ): Observable<GetResponse> {
     if (parameterId < 0) {
-      return this.getAllBooks(priceFilter);
+      return this.getAllBooks(priceFilter, pageNumber);
     } else if (filterParameter === 'category') {
-      return this.getBookListByCategory(parameterId, priceFilter);
+      return this.getBookListByCategory(parameterId, priceFilter, pageNumber);
     } else {
-      return this.getBookListByFormat(parameterId, priceFilter);
+      return this.getBookListByFormat(parameterId, priceFilter, pageNumber);
     }
   }
 
-  getBookListByKeyword(keyword: string): Observable<Book[]> {
-    const searchUrl = `${this.baseUrl}/findByTitle?title=${keyword}`;
-    return this.httpClient
-      .get<GetResponse>(searchUrl)
-      .pipe(map(resp => resp.content));
+  getBookListByKeyword(
+    keyword: string,
+    pageNumber: number
+  ): Observable<GetResponse> {
+    const searchUrl = `${this.baseUrl}/findByTitle?title=${keyword}&page=${pageNumber}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
 
   getBookListByAuthor(
     authorName: string,
-    priceFilter: PriceFilter
-  ): Observable<Book[]> {
-    const searchUrl = `${this.baseUrl}/findByAuthorName?author=${authorName}&startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}`;
-    return this.httpClient
-      .get<GetResponse>(searchUrl)
-      .pipe(map(resp => resp.content));
+    priceFilter: PriceFilter,
+    pageNumber: number
+  ): Observable<GetResponse> {
+    const searchUrl = `${this.baseUrl}/findByAuthorName?author=${authorName}&startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}&page=${pageNumber}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
 
-  private getAllBooks(priceFilter: PriceFilter) {
-    const searchUrl = `${this.baseUrl}?startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}`;
-    return this.httpClient
-      .get<GetResponse>(searchUrl)
-      .pipe(map(resp => resp.content));
+  private getAllBooks(priceFilter: PriceFilter, pageNumber: number) {
+    const searchUrl = `${this.baseUrl}?startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}&page=${pageNumber}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
 
-  private getBookListByCategory(categoryId: number, priceFilter: PriceFilter) {
-    const searchUrl = `${this.baseUrl}/findByCategory?id=${categoryId}&startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}`;
-    return this.httpClient
-      .get<GetResponse>(searchUrl)
-      .pipe(map(resp => resp.content));
+  private getBookListByCategory(
+    categoryId: number,
+    priceFilter: PriceFilter,
+    pageNumber: number
+  ) {
+    const searchUrl = `${this.baseUrl}/findByCategory?id=${categoryId}&startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}&page=${pageNumber}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
 
-  private getBookListByFormat(formatId: number, priceFilter: PriceFilter) {
-    const searchUrl = `${this.baseUrl}/findByFormat?id=${formatId}&startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}`;
-    return this.httpClient
-      .get<GetResponse>(searchUrl)
-      .pipe(map(resp => resp.content));
+  private getBookListByFormat(
+    formatId: number,
+    priceFilter: PriceFilter,
+    pageNumber: number
+  ) {
+    const searchUrl = `${this.baseUrl}/findByFormat?id=${formatId}&startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}&page=${pageNumber}`;
+    return this.httpClient.get<GetResponse>(searchUrl);
   }
 
   getBookCategories(): Observable<BookCategory[]> {
@@ -99,6 +102,10 @@ export class BookService {
 
 interface GetResponse {
   content: Book[];
+  totalPages: number;
+  size: number;
+  totalElements: number;
+  pageNumber: number;
 }
 
 interface GetResponseBookCategory {
