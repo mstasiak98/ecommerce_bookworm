@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   ContentChildren,
@@ -38,15 +39,15 @@ import {
     ]),
   ],
 })
-export class AccordionComponent implements AfterViewInit {
+export class AccordionComponent implements AfterContentInit {
   expanded = new Set<number>();
   @Input() collapsing = true;
-  @Input() defaultExpanded = true;
+  defaultExpanded = true;
 
   @ContentChildren(AccordionItemDirective)
   items: QueryList<AccordionItemDirective>;
 
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     if (this.defaultExpanded) {
       for (let i = 0; i < this.items.length; i++) {
         this.toggleState(i);

@@ -1,0 +1,27 @@
+
+
+.table_wrapper {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+table {
+  width: 100%;
+
+  thead, tbody {
+    border: 1px solid #eae8e4;
+    background: white;
+  }
+
+  th {
+    text-align: left;
+    padding: 2rem;
+  }
+
+  td {
+    padding: 2rem;
+  }
+
+}
+

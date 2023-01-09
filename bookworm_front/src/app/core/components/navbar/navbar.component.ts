@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from '../../../shared/services/book.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
+  display: boolean = false;
+  keyword: string = '';
 
-  constructor() { }
+  constructor(private bookService: BookService) {}
 
-  ngOnInit(): void {
+  searchByKeyword(event: Event) {
+    console.log('event = ', event);
+    this.bookService.triggerSearchByKeyword(this.keyword);
   }
-
 }

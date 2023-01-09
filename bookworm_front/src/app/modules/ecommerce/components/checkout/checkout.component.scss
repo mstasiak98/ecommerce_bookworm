@@ -1,0 +1,48 @@
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.checkout  input, select {
+  padding: 1rem;
+  border: 1px solid #eae8e4;
+  outline-color: black;
+}
+
+.checkout label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.payments label {
+  margin-bottom: 0;
+}
+
+.checkout select option {
+  background: white;
+}
+
+.payments ul li .details {
+  height: 0;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 0;
+}
+
+.checkout textarea {
+  border: 1px solid #eae8e4;
+  height: 150px;
+}
+
+.ship-address {
+  visibility: hidden;
+  height: 0;
+  opacity: 0;
+}
+
+.ship-address-checked {
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+}
+

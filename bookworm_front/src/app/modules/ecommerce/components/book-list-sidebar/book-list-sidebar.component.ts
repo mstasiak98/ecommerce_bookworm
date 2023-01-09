@@ -1,36 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { BookService } from '../../../../shared/services/book.service';
+import { BookCategory } from '../../../../core/models/book-category';
+import { BookFormat } from '../../../../core/models/book-format';
+import { Author } from '../../../../core/models/author';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-book-list-sidebar',
   templateUrl: './book-list-sidebar.component.html',
   styleUrls: ['./book-list-sidebar.component.scss'],
 })
 export class BookListSidebarComponent implements OnInit {
-  categories: any[] = [
-    { name: 'Art', extra: '0' },
-    { name: 'Sport', extra: '20' },
-    { name: 'Biography', extra: '10' },
-    { name: 'Children', extra: '4' },
-    { name: 'Cookbooks', extra: '8' },
-  ];
+  priceRangeValues: number[] = [0, 100];
+  bookCategories: BookCategory[] = [];
+  bookFormats: BookFormat[] = [];
+  bookAuthors: Author[] = [];
 
-  authors: any[] = [
-    { name: 'Cathy', extra: '0' },
-    { name: 'Anna', extra: '20' },
-    { name: 'Ashley', extra: '10' },
-    { name: 'Brian', extra: '4' },
-    { name: 'Colleen', extra: '8' },
-  ];
+  @Output() newPriceFilter = new EventEmitter<any>();
 
-  formats: any[] = [
-    { name: 'Hardcover', extra: '0' },
-    { name: 'Kindle', extra: '20' },
-    { name: 'Paperback', extra: '10' },
-  ];
+  constructor(private bookService: BookService) {}
 
-  priceRangeValues: number[] = [5, 100];
+  ngOnInit(): void {
+    this.listBookCategories();
+  }
 
-  constructor() {}
+  private listBookCategories(): void {
+    forkJoin([
+      this.bookService.getBookCategories(),
+      this.bookService.getBookFormats(),
+      this.bookService.getBookAuthors(),
+    ]).subscribe({
+      next: value => {
+        const [categories, formats, authors] = value;
+        this.bookCategories = categories;
+        this.bookFormats = formats;
+        this.bookAuthors = authors;
+      },
+    });
+  }
 
-  ngOnInit(): void {}
+  applyPriceFilter() {
+    const priceFilter = {
+      startPrice: this.priceRangeValues[0],
+      endPrice: this.priceRangeValues[1],
+    };
+    this.newPriceFilter.emit(priceFilter);
+  }
+
+  encodeURI(authorName: string) {
+    return encodeURIComponent(authorName.trim());
+  }
 }

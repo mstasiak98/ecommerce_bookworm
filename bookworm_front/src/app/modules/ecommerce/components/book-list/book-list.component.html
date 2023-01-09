@@ -1,299 +1,32 @@
 <section class="inner-width mx-auto items-center px-4 py-16">
   <div class="flex flex-col md:flex-row">
     <aside class="md:w-[21rem] w-full px-4">
-      <app-book-list-sidebar></app-book-list-sidebar>
+      <app-book-list-sidebar
+        (newPriceFilter)="changePriceFilter($event)"></app-book-list-sidebar>
     </aside>
     <main class="px-4 md:w-[79rem] w-full px-4">
       <div class="book-grid grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2">
-        <div class="book-card">
+        <div *ngFor="let book of books; index as i" class="book-card">
           <div class="w-full h-full flex flex-col items-center relative">
             <div>
               <img
-                src="./assets/cover_51.jpg"
+                src="{{ book.imageUrl }}"
                 width="150"
                 height="200"
                 class="object-contain" />
             </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
+            <div class="card-content w-full flex flex-col items-start pt-6">
+              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">{{
+                book.format.formatName
+              }}</a>
               <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
+                {{ book.name }}
               </a>
               <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
+                {{ book.author }}
               </a>
               <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
-                <i
-                  class="cart-icon pi pi-shopping-cart"
-                  style="font-size: 1.25rem"></i>
-              </div>
-            </div>
-            <div
-              class="cart-container w-full text-base font-medium uppercase cursor-pointer flex justify-start">
-              <span class="cart-button">ADD TO CART</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-card">
-          <div class="w-full h-full flex flex-col items-center relative">
-            <div>
-              <img
-                src="./assets/cover_51.jpg"
-                width="150"
-                height="200"
-                class="object-contain" />
-            </div>
-            <div class="card-content flex flex-col items-start pt-6">
-              <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">PAPERBACK</a>
-              <a class="text-base font-medium pb-[4px]">
-                All You Can Ever Know: A Memoir
-              </a>
-              <a class="text-sm text-gray-700 hover:text-[#f30b0b] pb-[4px]">
-                Nicole Chung
-              </a>
-              <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium">$10.29</p>
+                <p class="text-lg font-medium">${{ book.unitPrice }}</p>
                 <i
                   class="cart-icon pi pi-shopping-cart"
                   style="font-size: 1.25rem"></i>

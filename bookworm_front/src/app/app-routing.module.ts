@@ -9,6 +9,13 @@ const routes: Routes = [
         m => m.EcommerceModule
       ),
   },
+  {
+    path: 'shop',
+    loadChildren: () =>
+      import('./modules/ecommerce/ecommerce.module').then(
+        m => m.EcommerceModule
+      ),
+  },
 ];
 
 @NgModule({

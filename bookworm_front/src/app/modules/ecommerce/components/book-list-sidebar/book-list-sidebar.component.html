@@ -4,9 +4,13 @@
       <ng-template appAccordionContent>
         <div class="product-list-sidebar">
           <ul class="list-none">
-            <li *ngFor="let cat of categories; index as i">
-              <a href="#">{{ cat.name }}</a>
-              <span>({{ cat.extra }})</span>
+            <li *ngFor="let cat of bookCategories; index as i">
+              <a
+                routerLink="/shop/category/{{ cat.id }}"
+                [routerLinkActive]="['active-link']"
+                >{{ cat.categoryName }}</a
+              >
+              <!--<span>({{ cat.extra }})</span>-->
             </li>
           </ul>
         </div>
@@ -16,9 +20,13 @@
       <ng-template appAccordionContent>
         <div class="product-list-sidebar">
           <ul class="list-none">
-            <li *ngFor="let author of authors; index as i">
-              <a href="#">{{ author.name }}</a>
-              <span>({{ author.extra }})</span>
+            <li *ngFor="let author of bookAuthors; index as i">
+              <a
+                routerLink="/shop/author/{{ encodeURI(author.author) }}"
+                [routerLinkActive]="['active-link']"
+                >{{ author.author }}</a
+              >
+              <span>({{ author.bookCount }})</span>
             </li>
           </ul>
         </div>
@@ -28,9 +36,13 @@
       <ng-template appAccordionContent>
         <div class="product-list-sidebar">
           <ul class="list-none">
-            <li *ngFor="let format of formats; index as i">
-              <a href="#">{{ format.name }}</a>
-              <span>({{ format.extra }})</span>
+            <li *ngFor="let format of bookFormats; index as i">
+              <a
+                routerLink="/shop/format/{{ format.id }}"
+                [routerLinkActive]="['active-link']"
+                >{{ format.formatName }}</a
+              >
+              <!--<span>({{ format.extra }})</span>-->
             </li>
           </ul>
         </div>
@@ -43,7 +55,10 @@
             <p-slider [(ngModel)]="priceRangeValues" [range]="true"></p-slider>
           </div>
           <div class="p-8 pt-2 pb-8">
-            <button type="button" class="px-4 py-2 bg-[#f75454] text-white">
+            <button
+              (click)="applyPriceFilter()"
+              type="button"
+              class="px-4 py-2 bg-[#f75454] hover:bg-[#f84f4f] text-white">
               Filter
             </button>
             <span class="ml-4 text-sm"

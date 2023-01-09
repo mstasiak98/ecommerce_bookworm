@@ -9,15 +9,51 @@ import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { TabMenuModule } from '../../lib/tab-menu/tab-menu.module';
+import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'author/:name',
+    component: BookListComponent,
+  },
+  {
+    path: 'format/:id',
+    component: BookListComponent,
+  },
+  {
+    path: 'category/:id',
+    component: BookListComponent,
+  },
+  {
+    path: 'category',
+    component: BookListComponent,
+  },
+  {
+    path: 'books',
     component: BookListComponent,
   },
   {
     path: 'details',
     component: BookDetailsComponent,
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+  },
+  {
+    path: '',
+    redirectTo: '/books',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '/books',
+    pathMatch: 'full',
   },
 ];
 
@@ -26,6 +62,8 @@ const routes: Routes = [
     BookListComponent,
     BookListSidebarComponent,
     BookDetailsComponent,
+    CartComponent,
+    CheckoutComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,202 @@
+<section
+  class="checkout bg-[#fff6f6] border-b border-[1px] border-[#eae8e4] border-t-0 border-r-0 border-l-0">
+  <div class="p-4 md:p-6 inner-width mx-auto mb-24">
+    <form>
+      <h4 class="py-6 text-3xl font-medium text-center">Checkout</h4>
+      <div class="flex flex-col md:flex-row w-full md:justify-center gap-8">
+        <div
+          class="w-full md:w-3/4 flex flex-col border-[1px] border-custom-gray-light bg-white p-8">
+          <h3 class="text-lg font-medium mb-4">Billing details</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 md:gap-x-8">
+            <div class="form-group flex flex-col">
+              <label for="first_name">First name</label>
+              <input id="first_name" type="text" />
+            </div>
+            <div class="form-group flex flex-col">
+              <label for="last_name">Last name</label>
+              <input id="last_name" type="text" />
+            </div>
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="company_name">Company name (optional)</label>
+            <input id="company_name" type="text" />
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="country">Country</label>
+            <select id="country">
+              <option>Choose a country</option>
+              <option>United States</option>
+              <option>Great Britain</option>
+              <option>Germany</option>
+            </select>
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="street">Street address</label>
+            <input
+              placeholder="Street name and house number"
+              id="street"
+              type="text" />
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <input
+              placeholder="Apartment, flat number, etc. (optional)"
+              id="apartment"
+              type="text" />
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="city">City</label>
+            <input placeholder="City/town" id="city" type="text" />
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="phone">Phone number</label>
+            <input id="phone" type="text" />
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="email">Email address</label>
+            <input id="email" type="text" />
+          </div>
+          <div class="w-full flex flex-col ship-area">
+            <div class="form-group w-full flex flex-row items-center">
+              <input id="ship_address" type="checkbox" name="ship_address" />
+              <label
+                style="margin-bottom: 0 !important"
+                class="ml-4"
+                for="ship_address"
+                >Shipping to a different address
+              </label>
+            </div>
+            <div class="ship-address flex flex-col">
+              <div class="form-group w-full flex flex-col">
+                <label for="country">Country</label>
+                <select id="country">
+                  <option>Choose a country</option>
+                  <option>United States</option>
+                  <option>Great Britain</option>
+                  <option>Germany</option>
+                </select>
+              </div>
+              <div class="form-group w-full flex flex-col">
+                <label for="street">Street address</label>
+                <input
+                  placeholder="Street name and house number"
+                  id="street"
+                  type="text" />
+              </div>
+              <div class="form-group w-full flex flex-col">
+                <input
+                  placeholder="Apartment, flat number, etc. (optional)"
+                  id="apartment"
+                  type="text" />
+              </div>
+              <div class="form-group w-full flex flex-col">
+                <label for="city">City</label>
+                <input placeholder="City/town" id="city" type="text" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group w-full flex flex-col">
+            <label for="extra">Order notes (optional)</label>
+            <textarea
+              id="extra"
+              placeholder="Additional notes about your order"></textarea>
+          </div>
+        </div>
+        <div class="w-full md:w-1/4 flex flex-col">
+          <div class="border-[1px] border-black bg-white flex flex-col">
+            <div class="flex flex-col p-6">
+              <h4 class="font-medium text-lg mb-8">Your Order</h4>
+              <div class="flex justify-between mb-4 pl-1">
+                <p class="font-medium text-sm">
+                  Empire of Silver - Kindle × 18
+                </p>
+                <p class="font-medium text-sm">$712.62</p>
+              </div>
+            </div>
+            <hr />
+            <div class="flex flex-col p-6">
+              <h4 class="font-medium text-lg mb-8">Cart Totals</h4>
+              <div class="flex justify-between mb-4 pl-1">
+                <p class="font-medium text-sm">Subtotal</p>
+                <p class="font-medium text-sm">$712.62</p>
+              </div>
+            </div>
+            <hr />
+            <div class="flex flex-col p-6">
+              <h4 class="font-medium text-lg mb-8">Shipping</h4>
+              <div class="flex justify-between mb-4 pl-1">
+                <p class="font-medium text-sm">Flat rate: $712.62</p>
+              </div>
+            </div>
+            <hr />
+
+            <div class="flex flex-col p-6">
+              <div class="flex justify-between items-center pl-1">
+                <h4 class="font-medium text-2xl">Total</h4>
+                <p class="font-medium text-sm">$712.62</p>
+              </div>
+            </div>
+          </div>
+          <div class="border-[1px] border-black bg-white flex flex-col">
+            <div class="flex flex-col p-6">
+              <h4 class="font-medium text-lg mb-8">Payment</h4>
+              <div class="payments flex flex-col mb-4 pl-1">
+                <ul>
+                  <li>
+                    <div class="flex flex-col">
+                      <div class="flex flex-row items-center mb-4">
+                        <input
+                          type="radio"
+                          id="transfer"
+                          name="payment" /><label
+                          class="ml-4 text-sm mb-0 relative z-10"
+                          for="transfer"
+                          >Direct bank transfer</label
+                        >
+                      </div>
+                      <div class="details text-sm p-4">
+                        Make your payment directly into our bank account. Please
+                        use your Order ID as the payment reference. Your order
+                        will not be shipped until the funds have cleared in our
+                        account.
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="flex flex-col">
+                      <div class="flex flex-row items-center">
+                        <input type="radio" id="cash" name="payment" /><label
+                          class="ml-4 text-sm mb-0 relative z-100"
+                          for="cash"
+                          >Cash on delivery</label
+                        >
+                      </div>
+                      <div class="details text-sm mt-4 p-4">
+                        Pay with cash upon delivery.
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+            <div class="flex flex-col p-6">
+              <p class="text-sm text-gray-700">
+                Your personal data will be used to process your order, support
+                your experience throughout this website, and for other purposes
+                described in our privacy policy.
+              </p>
+            </div>
+          </div>
+
+          <div class="w-full mt-8">
+            <button
+              type="submit"
+              class="w-full py-4 bg-[#161619] text-white hover:bg-black">
+              Place Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
