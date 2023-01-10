@@ -16,6 +16,11 @@ const routes: Routes = [
         m => m.EcommerceModule
       ),
   },
+  {
+    path: '',
+    redirectTo: '/shop/books',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

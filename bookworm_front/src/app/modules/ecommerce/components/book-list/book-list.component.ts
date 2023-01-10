@@ -22,10 +22,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   pageSize: number = 20;
   totalPages: number = 0;
 
-  constructor(
-    private bookService: BookService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private bookService: BookService, public route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.keywordSearchMode$ = this.bookService

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BookService {
 
     @Autowired
     BookRepository bookRepository;
-
 
 
     public Page<Book> getAllBooks(Pageable pageable, Long startPrice, Long endPrice) {
@@ -41,6 +41,10 @@ public class BookService {
 
     public List<Map<String, Long>> getBookAuthors() {
         return this.bookRepository.findBookAuthors();
+    }
+
+    public Optional<Book> getBookDetails(Long id) {
+        return this.bookRepository.findById(id);
     }
 
 }

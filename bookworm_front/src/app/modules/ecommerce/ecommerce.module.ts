@@ -30,13 +30,15 @@ const routes: Routes = [
     component: BookListComponent,
   },
   {
+    path: 'details/:id',
+    component: BookDetailsComponent,
+  },
+
+  {
     path: 'books',
     component: BookListComponent,
   },
-  {
-    path: 'details',
-    component: BookDetailsComponent,
-  },
+
   {
     path: 'cart',
     component: CartComponent,
@@ -45,6 +47,7 @@ const routes: Routes = [
     path: 'checkout',
     component: CheckoutComponent,
   },
+
   {
     path: '',
     redirectTo: '/books',

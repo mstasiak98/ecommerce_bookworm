@@ -19,6 +19,11 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) {}
 
+  getBookDetails(bookId: number): Observable<Book> {
+    const url = `${this.baseUrl}/bookDetails?id=${bookId}`;
+    return this.httpClient.get<Book>(url);
+  }
+
   getBookList(
     parameterId: number,
     filterParameter: string | null,

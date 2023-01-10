@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -52,6 +53,11 @@ public class BookController {
     public ResponseEntity<List<Map<String, Long>>> getBookAuthors() {
         List<Map<String, Long>> authors = this.bookService.getBookAuthors();
         return ResponseEntity.ok(authors);
+    }
+
+    @GetMapping("/bookDetails")
+    public Optional<Book> getBookDetails(@RequestParam(name = "id") Long id) {
+        return this.bookService.getBookDetails(id);
     }
 
 }

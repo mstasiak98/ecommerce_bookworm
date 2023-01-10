@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from '../../../../shared/services/book.service';
+import { ActivatedRoute } from '@angular/router';
+import { Book } from '../../../../core/models/book';
 
 @Component({
   selector: 'app-book-details',
@@ -12,7 +15,24 @@ export class BookDetailsComponent implements OnInit {
     { name: 'Kindle', price: 12.12 },
   ];
 
-  constructor() {}
+  book: Book;
 
-  ngOnInit(): void {}
+  constructor(
+    private bookService: BookService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(() => {
+      this.handleBookDetails();
+    });
+  }
+
+  private handleBookDetails(): void {
+    const bookId = Number(this.route.snapshot.paramMap.get('id'));
+    this.bookService.getBookDetails(bookId).subscribe(data => {
+      this.book = data;
+      console.log('data = ', data);
+    });
+  }
 }
