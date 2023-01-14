@@ -34,10 +34,10 @@ public class BookController {
         return this.bookService.getBooksByCategory(id, startPrice, endPrice, pageable);
     }
 
-    @GetMapping("/findByFormat")
+   /* @GetMapping("/findByFormat")
     public Page<Book> getBooksByFormat(@RequestParam(name = "id") Long id, @RequestParam(name = "startPrice") Long startPrice, @RequestParam(name = "endPrice") Long endPrice, Pageable pageable) {
         return this.bookService.getBooksByFormat(id, startPrice, endPrice, pageable);
-    }
+    }*/
 
     @GetMapping("/findByAuthorName")
     public Page<Book> getBooksByAuthorName(@RequestParam(name = "author") String name, @RequestParam(name = "startPrice") Long startPrice, @RequestParam(name = "endPrice") Long endPrice, Pageable pageable) {

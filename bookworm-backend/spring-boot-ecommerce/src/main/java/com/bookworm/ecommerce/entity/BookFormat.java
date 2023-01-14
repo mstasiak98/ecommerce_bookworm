@@ -1,49 +1,80 @@
 package com.bookworm.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import net.minidev.json.annotate.JsonIgnore;
 
-import java.util.Set;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "book_format")
-//@Data - bug
 public class BookFormat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-    @Column(name = "format_name")
-    private String formatName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "format", fetch = FetchType.EAGER)
+
+    @EmbeddedId
+    BookFormatKey id;
+    @ManyToOne
+    @MapsId("bookId")
+    @JoinColumn(name = "book_id")
     @JsonBackReference
-    private Set<Book> books;
+    Book book;
+    @ManyToOne
+    @MapsId("formatId")
+    @JoinColumn(name = "format_id")
+    @JsonManagedReference
+    Format format;
+
+    double price;
+    int quantity;
 
 
-    public Long getId() {
+    public BookFormatKey getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BookFormatKey id) {
         this.id = id;
     }
 
-    public String getFormatName() {
-        return formatName;
+    public Book getBook() {
+        return book;
     }
 
-    public void setFormatName(String formatName) {
-        this.formatName = formatName;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Format getFormat() {
+        return format;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setFormat(Format format) {
+        this.format = format;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BookFormat)) return false;
+        return id != null && id.equals(((BookFormat)o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

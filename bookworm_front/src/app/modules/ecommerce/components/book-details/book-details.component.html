@@ -1,132 +1,151 @@
-<section class="">
-  <div
-    class="inner-width mx-auto flex flex-wrap md:flex-row items-center justify-center">
-    <div class="px-4 py-[3.5rem] w-full lg:w-1/2 xl:w-1/4 flex justify-center">
-      <img src="{{ book.imageUrl }}" style="width: 300px; height: auto" />
-    </div>
-    <div class="flex flex-col py-[3.5rem] px-[2rem] w-full lg:w-2/4 xl:w-2/4">
-      <h3 class="text-3xl font-medium mb-2">{{ book.name }}</h3>
-      <div class="mb-4">
-        <span class="text-sm font-medium">By(author)</span
-        ><span class="ml-2 text-sm font-normal text-gray-700">{{
-          book.author
-        }}</span>
+<div *ngIf="book">
+  <section class="">
+    <div
+      class="inner-width mx-auto flex flex-wrap md:flex-row items-center justify-center">
+      <div
+        class="px-4 py-[3.5rem] w-full lg:w-1/2 xl:w-1/4 flex justify-center">
+        <img src="{{ book?.imageUrl }}" style="width: 300px; height: auto" />
       </div>
-      <p class="text-sm font-normal mb-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Excepteur sint occaecat.
-      </p>
-      <p class="text-sm font-normal mb-1">
-        *The multi-million copy bestseller*
-      </p>
-      <p class="text-sm font-normal mb-1">Soon to be a major film</p>
-      <p class="text-sm font-normal mb-1">
-        A Number One New York Times Bestseller
-      </p>
+      <div class="flex flex-col py-[3.5rem] px-[2rem] w-full lg:w-2/4 xl:w-2/4">
+        <h3 class="text-3xl font-medium mb-2">{{ book?.name }}</h3>
+        <div class="mb-4">
+          <span class="text-sm font-medium">By(author)</span
+          ><span class="ml-2 text-sm font-normal text-gray-700">{{
+            book?.author
+          }}</span>
+        </div>
+        <p class="text-sm font-normal mb-4">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Excepteur sint occaecat.
+        </p>
+        <p class="text-sm font-normal mb-1">
+          *The multi-million copy bestseller*
+        </p>
+        <p class="text-sm font-normal mb-1">Soon to be a major film</p>
+        <p class="text-sm font-normal mb-1">
+          A Number One New York Times Bestseller
+        </p>
 
-      <p class="text-sm font-normal mb-1 mt-4">
-        ‘Painfully beautiful’ New York Times
-      </p>
-      <p class="text-sm font-normal mb-1">
-        ‘Unforgettable . . . as engrossing as it is moving’ Daily Mail
-      </p>
-      <p class="text-sm font-normal mb-1">‘A rare achievement’ The Times</p>
-      <p class="text-sm font-normal mb-1">
-        ‘I can’t even express how much I love this book!’ Reese Witherspoon
-      </p>
-    </div>
-    <div class="flex flex-col py-[3.5rem] px-[2rem] w-full lg:w-2/4 xl:w-1/4">
-      <div class="border-[1px] border-[#eae8e4]">
-        <div class="p-8 font-medium text-[1.375rem] bg-[#f6f5f3]">
-          $29.59 – $59.95
-        </div>
-        <div class="p-8 flex flex-col">
-          <div class="flex flex-col mb-4">
-            <label for="option" class="font-medium text-sm ml-0.5 mb-0.5"
-              >Book format</label
-            >
-            <select id="option" class="w-full select-input">
-              <option>Choose an option</option>
-              <option>Paperback</option>
-              <option>Hard cover</option>
-              <option>Kindle</option>
-            </select>
+        <p class="text-sm font-normal mb-1 mt-4">
+          ‘Painfully beautiful’ New York Times
+        </p>
+        <p class="text-sm font-normal mb-1">
+          ‘Unforgettable . . . as engrossing as it is moving’ Daily Mail
+        </p>
+        <p class="text-sm font-normal mb-1">‘A rare achievement’ The Times</p>
+        <p class="text-sm font-normal mb-1">
+          ‘I can’t even express how much I love this book!’ Reese Witherspoon
+        </p>
+      </div>
+      <div class="flex flex-col py-[3.5rem] px-[2rem] w-full lg:w-2/4 xl:w-1/4">
+        <div class="border-[1px] border-[#eae8e4]">
+          <div class="p-8 font-medium text-[1.375rem] bg-[#f6f5f3]">
+            ${{ book.formats | minPrice }} - ${{ book.formats | maxPrice }}
           </div>
-          <div class="flex flex-col w-full">
-            <label for="amount" class="font-medium text-sm ml-0.5 mb-0.5"
-              >Amount</label
-            >
-            <input
-              id="amount"
-              type="number"
-              class="w-full p-[0.75rem] border-[1px] border-[#eae8e4]" />
-          </div>
-          <div class="w-full">
-            <button
-              type="button"
-              class="w-full bg-[#676768] p-[1rem] font-normal text-white mt-[1.5rem]">
-              Add to cart
-            </button>
+          <div class="p-8 flex flex-col">
+            <form [formGroup]="addToCartForm" (ngSubmit)="addToCart()">
+              <div class="flex flex-col mb-4">
+                <label for="option" class="font-medium text-sm ml-0.5 mb-0.5"
+                  >Book format</label
+                >
+                <select
+                  formControlName="bookFormat"
+                  id="option"
+                  class="w-full select-input">
+                  <option
+                    *ngFor="let option of options"
+                    [value]="option.id"
+                    [label]="option.formatName">
+                    {{ option.formatName }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col w-full">
+                <label for="amount" class="font-medium text-sm ml-0.5 mb-0.5"
+                  >Amount</label
+                >
+                <input
+                  formControlName="amount"
+                  id="amount"
+                  type="number"
+                  class="w-full p-[0.75rem] border-[1px] border-[#eae8e4]" />
+              </div>
+              <div class="w-full">
+                <button
+                  [ngClass]="{
+                    disabled: addToCartForm.invalid
+                  }"
+                  type="submit"
+                  class="w-full bg-[#676768] hover:bg-[#8c8c8c] p-[1rem] font-normal text-white mt-[1.5rem]">
+                  Add to cart
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<section class="w-full py-8">
-  <div class="inner-width mx-auto flex justify-center">
-    <app-tab-menu style="width: 100%">
-      <tab-menu-item title="Description">
-        <ng-template appTabMenuContent>
-          <p class="font-normal text-[1rem]">
-            {{ book.description }}
-          </p>
-        </ng-template>
-      </tab-menu-item>
-      <tab-menu-item title="Product Details">
-        <ng-template appTabMenuContent>
-          <div class="flex flex-col w-full items-center">
-            <div
-              class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
-              <div class="w-1/2 text-[1rem] font-medium text-center">SKU:</div>
-              <div class="w-1/2 text-[1rem] text-center">{{ book.sku }}</div>
+  </section>
+  <section class="w-full py-8">
+    <div class="inner-width mx-auto flex justify-center">
+      <app-tab-menu style="width: 100%">
+        <tab-menu-item title="Description">
+          <ng-template appTabMenuContent>
+            <p class="font-normal text-[1rem]">
+              {{ book?.description }}
+            </p>
+          </ng-template>
+        </tab-menu-item>
+        <tab-menu-item title="Product Details">
+          <ng-template appTabMenuContent>
+            <div class="flex flex-col w-full items-center">
+              <div
+                class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+                <div class="w-1/2 text-[1rem] font-medium text-center">
+                  SKU:
+                </div>
+                <div class="w-1/2 text-[1rem] text-center">{{ book?.sku }}</div>
+              </div>
+              <div
+                class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+                <div class="w-1/2 text-[1rem] font-medium text-center">
+                  Category:
+                </div>
+                <div class="w-1/2 text-[1rem] text-center">
+                  <a href="#" class="text-[#f75454] hover:text-[#f30b0b]">{{
+                    book?.category?.categoryName
+                  }}</a>
+                </div>
+              </div>
+              <div
+                class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+                <div class="w-1/2 text-[1rem] font-medium text-center">
+                  Book Author:
+                </div>
+                <div class="w-1/2 text-[1rem] text-center">
+                  <a href="#" class="text-[#f75454] hover:text-[#f30b0b]">{{
+                    book?.author
+                  }}</a>
+                </div>
+              </div>
+              <div
+                class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+                <div class="w-1/2 text-[1rem] font-medium text-center">
+                  Book Format:
+                </div>
+                <div class="w-1/2 text-[1rem] text-center">
+                  <span *ngFor="let format of book?.formats; index as i"
+                    >{{ bookFormats[format.id.formatId] }}
+                    <span *ngIf="i !== book.formats.length - 1">, &nbsp;</span>
+                  </span>
+                </div>
+              </div>
             </div>
-            <div
-              class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
-              <div class="w-1/2 text-[1rem] font-medium text-center">
-                Category:
-              </div>
-              <div class="w-1/2 text-[1rem] text-center">
-                <a href="#" class="text-[#f75454] hover:text-[#f30b0b]">{{
-                  book.category.categoryName
-                }}</a>
-              </div>
-            </div>
-            <div
-              class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
-              <div class="w-1/2 text-[1rem] font-medium text-center">
-                Book Author:
-              </div>
-              <div class="w-1/2 text-[1rem] text-center">
-                <a href="#" class="text-[#f75454] hover:text-[#f30b0b]">{{
-                  book.author
-                }}</a>
-              </div>
-            </div>
-            <div
-              class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
-              <div class="w-1/2 text-[1rem] font-medium text-center">
-                Book Format:
-              </div>
-              <div class="w-1/2 text-[1rem] text-center">
-                {{ book.format.formatName }}
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </tab-menu-item>
-    </app-tab-menu>
-  </div>
-</section>
+          </ng-template>
+        </tab-menu-item>
+      </app-tab-menu>
+    </div>
+  </section>
+</div>

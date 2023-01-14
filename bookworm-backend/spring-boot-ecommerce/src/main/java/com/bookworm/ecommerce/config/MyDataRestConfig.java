@@ -2,7 +2,7 @@ package com.bookworm.ecommerce.config;
 
 import com.bookworm.ecommerce.entity.Book;
 import com.bookworm.ecommerce.entity.BookCategory;
-import com.bookworm.ecommerce.entity.BookFormat;
+import com.bookworm.ecommerce.entity.Format;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         disableHttpMethods(Book.class, config, unsuportedActions);
         disableHttpMethods(BookCategory.class, config, unsuportedActions);
-        disableHttpMethods(BookFormat.class, config, unsuportedActions);
+        disableHttpMethods(Format.class, config, unsuportedActions);
 
         // call an internal helper method
         exposeIds(config);

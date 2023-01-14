@@ -9,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "book")
@@ -17,14 +19,22 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonManagedReference
     private BookCategory category;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "format_id", nullable = false)
+
+    @OneToMany(mappedBy = "book")
     @JsonManagedReference
-    private BookFormat format;
+    Set<BookFormat> formats;
+
+    public Set<BookFormat> getFormats() {
+        return formats;
+    }
+
+    public void setFormats(Set<BookFormat> formats) {
+        this.formats = formats;
+    }
+
     @Column(name = "sku")
     private String sku;
     @Column(name = "name")
@@ -152,5 +162,17 @@ public class Book {
 
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        return id != null && id.equals(((Book)o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

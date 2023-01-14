@@ -85,7 +85,7 @@ export class BookService {
       .pipe(map(response => response._embedded.bookCategory));
   }
 
-  getBookFormats(): Observable<BookFormat[]> {
+  getBookFormats(): Observable<{ id: number; formatName: string }[]> {
     return this.httpClient
       .get<GetResponseBookFormat>(this.formatUrl)
       .pipe(map(response => response._embedded.bookFormat));
@@ -121,6 +121,6 @@ interface GetResponseBookCategory {
 
 interface GetResponseBookFormat {
   _embedded: {
-    bookFormat: BookFormat[];
+    bookFormat: { id: number; formatName: string }[];
   };
 }

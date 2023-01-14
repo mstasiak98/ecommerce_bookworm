@@ -3,6 +3,7 @@ import { Book } from '../../../../core/models/book';
 import { BookService } from '../../../../shared/services/book.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { BookFormatEnum } from '../../../../shared/enums/book-format-enum';
 
 @Component({
   selector: 'app-book-list',
@@ -21,6 +22,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   totalElements: number = 0;
   pageSize: number = 20;
   totalPages: number = 0;
+  bookFormats = BookFormatEnum;
 
   constructor(private bookService: BookService, public route: ActivatedRoute) {}
 

@@ -18,7 +18,6 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-
     public Page<Book> getAllBooks(Pageable pageable, Long startPrice, Long endPrice) {
         return this.bookRepository.findAllByUnitPriceBetween(pageable, startPrice, endPrice);
     }
@@ -27,9 +26,9 @@ public class BookService {
         return this.bookRepository.findByCategoryIdAndUnitPriceBetween(id, startPrice, endPrice, pageable);
     }
 
-    public Page<Book> getBooksByFormat(Long id, Long startPrice, Long endPrice, Pageable pageable) {
+/*    public Page<Book> getBooksByFormat(Long id, Long startPrice, Long endPrice, Pageable pageable) {
         return this.bookRepository.findByFormatIdAndUnitPriceBetween(id, startPrice, endPrice, pageable);
-    }
+    }*/
 
     public Page<Book> getBooksByAuthorName(String name, Long startPrice, Long endPrice, Pageable pageable) {
         return this.bookRepository.findByAuthorContainingIgnoreCaseAndUnitPriceBetween(name, startPrice, endPrice, pageable);

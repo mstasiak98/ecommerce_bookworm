@@ -7,6 +7,8 @@ export const environment = {
   baseUrl: 'http://localhost:8080/api',
   categoryUrl: 'http://localhost:8080/api/book-category',
   formatUrl: 'http://localhost:8080/api/book-format',
+  countriesUrl: 'http://localhost:8080/api/countries',
+  placeOrderUrl: 'http://localhost:8080/api/checkout/purchase',
 };
 
 /*

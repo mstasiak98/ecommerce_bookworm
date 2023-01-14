@@ -5,12 +5,13 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { BookListSidebarComponent } from './components/book-list-sidebar/book-list-sidebar.component';
 import { AccordionModule } from '../../lib/accordion/accordion.module';
 import { SliderModule } from 'primeng/slider';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { TabMenuModule } from '../../lib/tab-menu/tab-menu.module';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     path: 'cart',
     component: CartComponent,
   },
+
   {
     path: 'checkout',
     component: CheckoutComponent,
@@ -76,6 +78,8 @@ const routes: Routes = [
     FormsModule,
     PaginatorModule,
     TabMenuModule,
+    SharedModule,
+    ReactiveFormsModule,
   ],
 })
 export class EcommerceModule {}

@@ -1,7 +1,9 @@
 <section
   class="bg-[#fff6f6] border-b border-[1px] border-[#eae8e4] border-t-0 border-r-0 border-l-0">
   <div class="p-4 md:p-6 inner-width mx-auto">
-    <h4 class="py-6 text-3xl font-medium text-center">Your Cart: 4 items</h4>
+    <h4 class="py-6 text-3xl font-medium text-center">
+      Your Cart: {{ totalQuantity }} items
+    </h4>
     <div class="flex flex-col md:flex-row w-full md:justify-center gap-8">
       <div class="w-full md:w-3/4">
         <div class="table_wrapper">
@@ -16,7 +18,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let item of cartItems">
                 <td>
                   <div class="flex flex-row">
                     <img
@@ -25,23 +27,40 @@
                     <div class="flex flex-col justify-center ml-4">
                       <h6
                         class="mb-2 text-base hover:text-custom-red-light cursor-pointer">
-                        All You Can Ever Know: A Memoir - Hardcover
+                        <span
+                          class="font-medium hover:text hover:text-custom-red-light cursor-pointer"
+                          >{{ item.name }}</span
+                        >
+                        -
+                        {{ item.format.formatName }}
                       </h6>
                       <span
-                        class="text-sm text-gray-700 hover:text-custom-red-strong"
-                        >Anna Banks</span
+                        class="text-sm text-gray-700 hover:text-custom-red-strong cursor-pointer"
+                        >{{ item.author }}</span
                       >
                     </div>
                   </div>
                 </td>
-                <td class="text-base font-medium">$29.95</td>
+                <td class="text-base font-medium">
+                  {{ item.unitPrice | currency : 'USD' }}
+                </td>
                 <td>
                   <input
+                    [(ngModel)]="item.quantity"
+                    (change)="calculateChangedQuantity(item)"
                     class="border-[1px] border-[#eae8e4] max-w-[80px] py-4"
-                    type="number" />
+                    type="number"
+                    min="0" />
                 </td>
-                <td class="text-base font-medium">$29.95</td>
-                <td><i class="pi pi-times" style="font-size: 1.5rem"></i></td>
+                <td class="text-base font-medium">
+                  {{ item.unitPrice * item.quantity | currency : 'USD' }}
+                </td>
+                <td>
+                  <i
+                    (click)="removeItem(item)"
+                    class="pi pi-times cursor-pointer"
+                    style="font-size: 1.5rem"></i>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -53,15 +72,17 @@
             <h4 class="font-medium text-lg mb-8">Cart Totals</h4>
             <div class="flex justify-between mb-4 pl-1">
               <p class="font-medium text-sm">Subtotal</p>
-              <p class="font-medium text-sm">$102.49</p>
+              <p class="font-medium text-sm">
+                {{ totalPrice | currency : 'USD' }}
+              </p>
             </div>
             <div class="flex justify-between mb-4 pl-1">
               <p class="font-medium text-sm">Shipping</p>
-              <p class="font-medium text-sm">$15.00</p>
+              <p class="font-medium text-sm text-custom-red-lifht">FREE</p>
             </div>
           </div>
           <hr />
-          <div class="flex flex-col p-6">
+          <!--          <div class="flex flex-col p-6">
             <h4 class="font-medium text-lg mb-8">Shipping</h4>
             <div class="flex justify-between mb-4 pl-1">
               <p class="font-medium text-sm">Kalisz, Wiejska 26c</p>
@@ -70,18 +91,22 @@
                 >(change)</span
               >
             </div>
-          </div>
+          </div>-->
           <hr />
           <div class="flex flex-col p-6">
             <div class="flex justify-between items-center pl-1">
               <h4 class="font-medium text-2xl">Total</h4>
-              <p class="font-medium text-sm">$102.49</p>
+              <p class="font-medium text-sm">
+                {{ totalPrice | currency : 'USD' }}
+              </p>
             </div>
           </div>
         </div>
 
         <div class="w-full mt-8">
           <button
+            [ngClass]="{ disabled: this.totalQuantity === 0 }"
+            routerLink="/shop/checkout"
             type="button"
             class="w-full py-4 bg-[#161619] text-white hover:bg-black">
             Checkout

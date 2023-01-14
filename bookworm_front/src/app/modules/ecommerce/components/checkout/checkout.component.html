@@ -1,63 +1,101 @@
 <section
   class="checkout bg-[#fff6f6] border-b border-[1px] border-[#eae8e4] border-t-0 border-r-0 border-l-0">
   <div class="p-4 md:p-6 inner-width mx-auto mb-24">
-    <form>
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
       <h4 class="py-6 text-3xl font-medium text-center">Checkout</h4>
       <div class="flex flex-col md:flex-row w-full md:justify-center gap-8">
         <div
           class="w-full md:w-3/4 flex flex-col border-[1px] border-custom-gray-light bg-white p-8">
-          <h3 class="text-lg font-medium mb-4">Billing details</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 md:gap-x-8">
-            <div class="form-group flex flex-col">
-              <label for="first_name">First name</label>
-              <input id="first_name" type="text" />
+          <h3 class="text-lg font-medium mb-4">Customer</h3>
+          <div formGroupName="customer" class="flex flex-col">
+            <div class="grid grid-cols-1 md:grid-cols-2 md:gap-x-8">
+              <div class="form-group flex flex-col">
+                <label for="first_name">First name</label>
+                <input
+                  formControlName="firstName"
+                  id="first_name"
+                  type="text" />
+              </div>
+              <div class="form-group flex flex-col">
+                <label for="last_name">Last name</label>
+                <input formControlName="lastName" id="last_name" type="text" />
+              </div>
             </div>
-            <div class="form-group flex flex-col">
-              <label for="last_name">Last name</label>
-              <input id="last_name" type="text" />
+            <div class="form-group w-full flex flex-col">
+              <label for="company_name">Company name (optional)</label>
+              <input
+                formControlName="companyName"
+                id="company_name"
+                type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="phone">Phone number</label>
+              <input formControlName="phoneNumber" id="phone" type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="email">Email address</label>
+              <input formControlName="email" id="email" type="text" />
             </div>
           </div>
-          <div class="form-group w-full flex flex-col">
-            <label for="company_name">Company name (optional)</label>
-            <input id="company_name" type="text" />
+          <hr />
+          <h3 class="text-lg font-medium my-4">Billing address</h3>
+          <div formGroupName="billingAddress" class="flex flex-col">
+            <div *ngIf="countries" class="form-group w-full flex flex-col">
+              <label for="country">Country</label>
+              <select
+                (change)="getStatesForCountry('billingAddress')"
+                formControlName="country"
+                id="country">
+                <option
+                  *ngFor="let country of countries"
+                  [ngValue]="country.name">
+                  {{ country.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="street">Street address</label>
+              <input
+                formControlName="street"
+                placeholder="Street name and house number"
+                id="street"
+                type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="city">City</label>
+              <input
+                formControlName="city"
+                placeholder="City/town"
+                id="city"
+                type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="state">State</label>
+              <select formControlName="state" id="state">
+                <option
+                  *ngFor="let state of billingAddressStates"
+                  [ngValue]="state.name">
+                  {{ state.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="zip">Zip code</label>
+              <input
+                formControlName="zipCode"
+                placeholder="Zip code"
+                id="zip"
+                type="text" />
+            </div>
           </div>
-          <div class="form-group w-full flex flex-col">
-            <label for="country">Country</label>
-            <select id="country">
-              <option>Choose a country</option>
-              <option>United States</option>
-              <option>Great Britain</option>
-              <option>Germany</option>
-            </select>
-          </div>
-          <div class="form-group w-full flex flex-col">
-            <label for="street">Street address</label>
-            <input
-              placeholder="Street name and house number"
-              id="street"
-              type="text" />
-          </div>
-          <div class="form-group w-full flex flex-col">
-            <input
-              placeholder="Apartment, flat number, etc. (optional)"
-              id="apartment"
-              type="text" />
-          </div>
-          <div class="form-group w-full flex flex-col">
-            <label for="city">City</label>
-            <input placeholder="City/town" id="city" type="text" />
-          </div>
-          <div class="form-group w-full flex flex-col">
-            <label for="phone">Phone number</label>
-            <input id="phone" type="text" />
-          </div>
-          <div class="form-group w-full flex flex-col">
-            <label for="email">Email address</label>
-            <input id="email" type="text" />
-          </div>
-          <div class="w-full flex flex-col ship-area">
+          <hr />
+          <div class="w-full flex flex-col ship-area my-4">
             <div class="form-group w-full flex flex-row items-center">
-              <input id="ship_address" type="checkbox" name="ship_address" />
+              <input
+                formControlName="differentShipping"
+                id="ship_address"
+                type="checkbox"
+                name="ship_address" />
               <label
                 style="margin-bottom: 0 !important"
                 class="ml-4"
@@ -65,51 +103,137 @@
                 >Shipping to a different address
               </label>
             </div>
-            <div class="ship-address flex flex-col">
+            <div
+              [ngClass]="{
+                'ship-address-checked':
+                  checkoutForm.controls['differentShipping'].value
+              }"
+              formGroupName="shippingAddress"
+              class="ship-address flex flex-col">
               <div class="form-group w-full flex flex-col">
-                <label for="country">Country</label>
-                <select id="country">
-                  <option>Choose a country</option>
-                  <option>United States</option>
-                  <option>Great Britain</option>
-                  <option>Germany</option>
+                <label for="shipping-country">Country</label>
+                <select
+                  formControlName="country"
+                  form
+                  id="shipping-country"
+                  (change)="getStatesForCountry('shippingAddress')">
+                  <option
+                    *ngFor="let country of countries"
+                    [ngValue]="country.name">
+                    {{ country.name }}
+                  </option>
                 </select>
               </div>
               <div class="form-group w-full flex flex-col">
-                <label for="street">Street address</label>
+                <label for="shipping-street">Street address</label>
                 <input
+                  formControlName="street"
                   placeholder="Street name and house number"
-                  id="street"
+                  id="shipping-street"
                   type="text" />
               </div>
               <div class="form-group w-full flex flex-col">
+                <label for="shipping-city">City</label>
                 <input
-                  placeholder="Apartment, flat number, etc. (optional)"
-                  id="apartment"
+                  formControlName="city"
+                  placeholder="City/town"
+                  id="shipping-city"
                   type="text" />
               </div>
               <div class="form-group w-full flex flex-col">
-                <label for="city">City</label>
-                <input placeholder="City/town" id="city" type="text" />
+                <label for="shipping-state">State</label>
+                <select formControlName="state" id="shipping-state">
+                  <option
+                    *ngFor="let state of shippingAddressStates"
+                    [ngValue]="state.name">
+                    {{ state.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group w-full flex flex-col">
+                <label for="shipping-zip">Zip code</label>
+                <input
+                  formControlName="zipCode"
+                  placeholder="Zip code"
+                  id="shipping-zip"
+                  type="text" />
               </div>
             </div>
           </div>
-          <div class="form-group w-full flex flex-col">
+          <div formGroupName="extra" class="form-group w-full flex flex-col">
             <label for="extra">Order notes (optional)</label>
             <textarea
+              formControlName="orderNotes"
               id="extra"
               placeholder="Additional notes about your order"></textarea>
+          </div>
+          <div
+            formGroupName="creditCard"
+            class="form-group w-full flex flex-col">
+            <div class="form-group w-full flex flex-col">
+              <label for="card-type">Card Type</label>
+              <select formControlName="cardType" id="card-type">
+                <option>Visa</option>
+                <option>Mastercard</option>
+              </select>
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="name-card">Name on card</label>
+              <input
+                formControlName="nameOnCard"
+                placeholder="Name on card"
+                id="name-card"
+                type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="card-number">Card number</label>
+              <input
+                formControlName="cardNumber"
+                placeholder="Name on card"
+                id="card-number"
+                type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="security-code">Security code</label>
+              <input
+                formControlName="securityCode"
+                placeholder="Security code"
+                id="security-code"
+                type="text" />
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="expiration-month">Expiration month</label>
+              <select formControlName="expirationMonth" id="expiration-month">
+                <option *ngFor="let month of creditCardMonths">
+                  {{ month }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group w-full flex flex-col">
+              <label for="expiration-year">Expiration year</label>
+              <select formControlName="expirationYear" id="expiration-year">
+                <option *ngFor="let year of creditCardYears">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="w-full md:w-1/4 flex flex-col">
           <div class="border-[1px] border-black bg-white flex flex-col">
             <div class="flex flex-col p-6">
               <h4 class="font-medium text-lg mb-8">Your Order</h4>
-              <div class="flex justify-between mb-4 pl-1">
+              <div
+                *ngFor="let item of cartItems"
+                class="flex justify-between mb-4 pl-1">
                 <p class="font-medium text-sm">
-                  Empire of Silver - Kindle × 18
+                  {{ item.name }} - {{ item.format.formatName }} ×
+                  {{ item.quantity }}
                 </p>
-                <p class="font-medium text-sm">$712.62</p>
+                <p class="font-medium text-sm">
+                  {{ item.quantity * item.unitPrice | currency : 'USD' }}
+                </p>
               </div>
             </div>
             <hr />
@@ -117,14 +241,18 @@
               <h4 class="font-medium text-lg mb-8">Cart Totals</h4>
               <div class="flex justify-between mb-4 pl-1">
                 <p class="font-medium text-sm">Subtotal</p>
-                <p class="font-medium text-sm">$712.62</p>
+                <p class="font-medium text-sm">
+                  {{ totalPrice | currency : 'USD' }}
+                </p>
               </div>
             </div>
             <hr />
             <div class="flex flex-col p-6">
               <h4 class="font-medium text-lg mb-8">Shipping</h4>
               <div class="flex justify-between mb-4 pl-1">
-                <p class="font-medium text-sm">Flat rate: $712.62</p>
+                <p class="font-medium text-sm">
+                  Flat rate: <span class="text-custom-red-light">FREE</span>
+                </p>
               </div>
             </div>
             <hr />
@@ -132,7 +260,9 @@
             <div class="flex flex-col p-6">
               <div class="flex justify-between items-center pl-1">
                 <h4 class="font-medium text-2xl">Total</h4>
-                <p class="font-medium text-sm">$712.62</p>
+                <p class="font-medium text-sm">
+                  {{ totalPrice | currency : 'USD' }}
+                </p>
               </div>
             </div>
           </div>

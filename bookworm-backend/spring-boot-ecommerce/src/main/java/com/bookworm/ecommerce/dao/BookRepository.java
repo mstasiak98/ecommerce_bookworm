@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     Page<Book> findByCategoryIdAndUnitPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);
-    Page<Book> findByFormatIdAndUnitPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);
+/*    Page<Book> findByFormatIdAndUnitPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);*/
     Page<Book> findByAuthorContainingIgnoreCaseAndUnitPriceBetween (@Param("author") String author, Long startPrice, Long endPrice, Pageable pageable);
     Page<Book> findAllByUnitPriceBetween(Pageable pageable, Long startPrice, Long endPrice);
     Page<Book> findByNameContainingIgnoreCase(@Param("title") String title, Pageable pageable);

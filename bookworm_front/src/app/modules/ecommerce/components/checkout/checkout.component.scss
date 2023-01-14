@@ -38,6 +38,7 @@
   visibility: hidden;
   height: 0;
   opacity: 0;
+  transition: opacity 1s cubic-bezier(.37, 1.04, .68, .98);
 }
 
 .ship-address-checked {

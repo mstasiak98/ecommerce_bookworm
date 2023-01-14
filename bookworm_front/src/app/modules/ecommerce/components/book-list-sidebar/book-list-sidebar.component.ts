@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs';
 export class BookListSidebarComponent implements OnInit {
   priceRangeValues: number[] = [0, 100];
   bookCategories: BookCategory[] = [];
-  bookFormats: BookFormat[] = [];
+  bookFormats: { id: number; formatName: string }[] = [];
   bookAuthors: Author[] = [];
 
   @Output() newPriceFilter = new EventEmitter<any>();

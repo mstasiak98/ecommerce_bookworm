@@ -15,5 +15,5 @@ export class Book {
   dateCreated: Date;
   lastUpdated: Date;
   category: BookCategory;
-  format: BookFormat;
+  formats: BookFormat[];
 }

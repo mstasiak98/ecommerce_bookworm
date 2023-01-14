@@ -81,3 +81,9 @@
   font-weight: 500;
   text-decoration: underline;
 }
+
+.disabled {
+  cursor: not-allowed;
+  background-color: rgb(199, 198, 198) !important;
+  pointer-events:none;
+}

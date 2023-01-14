@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "book_category")
+@Table(name = "category")
 //@Data - bug
 
 public class BookCategory {

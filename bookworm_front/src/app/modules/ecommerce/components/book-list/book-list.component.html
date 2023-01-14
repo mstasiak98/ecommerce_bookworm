@@ -20,9 +20,16 @@
                   class="object-contain" />
               </div>
               <div class="card-content w-full flex flex-col items-start pt-6">
-                <a class="text-xs uppercase text-[#f30b0b] pb-[4px]">{{
-                  book.format.formatName
-                }}</a>
+                <div class="flex flex-wrap">
+                  <a
+                    *ngFor="let format of book.formats; index as i"
+                    class="text-xs uppercase text-[#f30b0b] pb-[4px]"
+                    >{{ bookFormats[format.id.formatId] }}
+                    <span *ngIf="i !== book.formats.length - 1" g
+                      >, &nbsp;</span
+                    >
+                  </a>
+                </div>
                 <a class="text-base font-medium pb-[4px]">
                   {{ book.name }}
                 </a>
@@ -30,7 +37,9 @@
                   {{ book.author }}
                 </a>
                 <div class="flex justify-between items-center w-full">
-                  <p class="text-lg font-medium">${{ book.unitPrice }}</p>
+                  <p class="text-lg font-medium">
+                    ${{ book.formats | minPrice }}
+                  </p>
                   <i
                     class="cart-icon pi pi-shopping-cart"
                     style="font-size: 1.25rem"></i>

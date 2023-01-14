@@ -8,10 +8,16 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { RouterModule } from '@angular/router';
 import { DelayedInputModule } from '../lib/delayed-input/delayed-input.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
 
 @NgModule({
-  declarations: [NavbarComponent, BreadcrumbComponent, FooterComponent],
+  declarations: [
+    NavbarComponent,
+    BreadcrumbComponent,
+    FooterComponent,
+    CartStatusComponent,
+  ],
   exports: [NavbarComponent, BreadcrumbComponent, FooterComponent],
   imports: [
     CommonModule,
@@ -21,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     DelayedInputModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class CoreModule {}
