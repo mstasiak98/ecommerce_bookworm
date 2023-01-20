@@ -4,6 +4,17 @@ import { CheckoutComponent } from './modules/ecommerce/components/checkout/check
 
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+  },
+  {
+    path: 'products',
+    loadChildren: () =>
+      import('./modules/ecommerce/ecommerce.module').then(
+        m => m.EcommerceModule
+      ),
+  },
+  {
     path: 'products',
     loadChildren: () =>
       import('./modules/ecommerce/ecommerce.module').then(

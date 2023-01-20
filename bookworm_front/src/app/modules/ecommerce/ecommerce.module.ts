@@ -12,8 +12,20 @@ import { TabMenuModule } from '../../lib/tab-menu/tab-menu.module';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { SharedModule } from '../../shared/shared.module';
+import { OrderPlacedComponent } from './components/order-placed/order-placed.component';
+import { OrdersHistoryComponent } from './components/orders-history/orders-history.component';
+import { AuthGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
+  {
+    path: 'order-history',
+    component: OrdersHistoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-placed/:ref',
+    component: OrderPlacedComponent,
+  },
   {
     path: 'author/:name',
     component: BookListComponent,
@@ -69,6 +81,8 @@ const routes: Routes = [
     BookDetailsComponent,
     CartComponent,
     CheckoutComponent,
+    OrderPlacedComponent,
+    OrdersHistoryComponent,
   ],
   imports: [
     CommonModule,

@@ -87,3 +87,35 @@
   background-color: rgb(199, 198, 198) !important;
   pointer-events:none;
 }
+
+.input-field {
+  padding: 1rem;
+  border: 1px solid #eae8e4;
+  outline-color: black;
+}
+
+.table_wrapper {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+
+  thead, tbody {
+    border: 1px solid #eae8e4;
+    background: white;
+  }
+
+  th {
+    text-align: left;
+    padding: 2rem;
+  }
+
+  td {
+    padding: 2rem;
+  }
+
+}

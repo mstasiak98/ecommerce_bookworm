@@ -1,11 +1,13 @@
 package com.bookworm.ecommerce.security.service;
 
 import com.bookworm.ecommerce.entity.User;
+import jakarta.transaction.Transactional;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.SQLOutput;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.List;
@@ -31,6 +33,7 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
+    @Transactional
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(
                 role -> new SimpleGrantedAuthority(role.getName().name())

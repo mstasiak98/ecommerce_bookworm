@@ -9,6 +9,7 @@ export const environment = {
   formatUrl: 'http://localhost:8080/api/book-format',
   countriesUrl: 'http://localhost:8080/api/countries',
   placeOrderUrl: 'http://localhost:8080/api/checkout/purchase',
+  orderUrl: 'http://localhost:8080/api/orders',
 };
 
 /*

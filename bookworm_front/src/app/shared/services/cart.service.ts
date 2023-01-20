@@ -63,6 +63,7 @@ export class CartService {
   computeCartTotals(): void {
     let totalPrice: number = 0;
     let totalQuantity: number = 0;
+    console.log('items = ', this.cartItems.length);
     for (let item of this.cartItems) {
       totalPrice += item.unitPrice * item.quantity;
       totalQuantity += item.quantity;
@@ -78,6 +79,7 @@ export class CartService {
   }
 
   clearCart(): void {
+    console.log('clear');
     this.cartItems = [];
     this.storage.clear();
     this.computeCartTotals();

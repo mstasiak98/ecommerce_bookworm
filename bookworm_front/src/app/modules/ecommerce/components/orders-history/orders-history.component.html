@@ -1,0 +1,39 @@
+<section class="inner-width mx-auto">
+  <div class="w-full flex flex-col justify-center items-center">
+    <h2 class="text-4xl font-medium mt-6">Your orders history</h2>
+    <div *ngIf="orders.length; else noOrders" class="table_wrapper my-6">
+      <table>
+        <thead>
+          <tr>
+            <th>Tracking number</th>
+            <th>Total Quantity</th>
+            <th>Total Price</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="text-base font-medium">
+              {{ order.orderTrackingNumber }}
+            </td>
+            <td class="text-base font-medium">
+              {{ order.totalQuantity }}
+            </td>
+            <td class="text-base font-medium">
+              {{ order.totalPrice }}
+            </td>
+            <td class="text-base font-medium">
+              {{ order.dateCreated }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noOrders>
+      <div class="w-full text-center mt-8">
+        <h2 class="text-lg">No orders yet</h2>
+      </div>
+    </ng-template>
+  </div>
+</section>

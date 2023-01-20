@@ -258,12 +258,18 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.placeOrder(purchase).subscribe({
       next: (resp: any) => {
         console.log('resp = ', resp);
-        alert(`Your order has been placed`);
+        this.router.navigate(['/shop/order-placed', resp.orderTrackingNumber]);
+        this.clearCart();
       },
       error: err => {
         alert(`There was an error: ${err.message}`);
       },
     });
+  }
+
+  clearCart(): void {
+    this.cartItems = [];
+    this.cartService.clearCart();
   }
 
   getStatesForCountry(formGroup: string): void {

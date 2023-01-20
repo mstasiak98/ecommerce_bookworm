@@ -34,6 +34,14 @@ public class CheckoutService {
         order.setBillingAddress(purchase.getBillingAddress());
 
         Customer customer = purchase.getCustomer();
+        String customerEmail = customer.getEmail();
+
+        Customer exisitingCustomer = customerRepository.findByEmail(customerEmail);
+
+        if(exisitingCustomer != null) {
+            customer = exisitingCustomer;
+        }
+
         customer.add(order);
 
         customerRepository.save(customer);

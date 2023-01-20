@@ -49,7 +49,42 @@
       </div>
       <div class="flex flex-wrap gap-x-6">
         <app-cart-status></app-cart-status>
-        <i class="pi pi-user text-black" style="font-size: 1.5rem"></i>
+        <div class="relative" (appClickOutside)="showDropdown = false">
+          <i
+            class="pi pi-user text-black cursor-pointer"
+            style="font-size: 1.5rem"
+            (click)="showDropdown = !showDropdown"></i>
+          <div
+            [hidden]="!showDropdown"
+            class="cursor-pointer absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 opacity-100">
+            <ul>
+              <li
+                *ngIf="!isLoggedIn"
+                class="hover:bg-gray-200 p-4 hover:font-medium">
+                <a href="/auth/login" class="block">Sign in</a>
+              </li>
+
+              <li
+                *ngIf="isLoggedIn"
+                class="hover:bg-gray-200 p-4 hover:font-medium">
+                <a routerLink="/shop/order-history" class="block"
+                  >Order History</a
+                >
+              </li>
+              <li
+                *ngIf="isLoggedIn"
+                (click)="logout()"
+                class="hover:bg-gray-200 p-4">
+                Logout
+              </li>
+              <li
+                *ngxPermissionsOnly="'ROLE_ADMIN'"
+                class="hover:bg-gray-200 p-4">
+                Admin panel
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

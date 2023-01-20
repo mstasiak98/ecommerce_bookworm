@@ -10,6 +10,12 @@ import { RouterModule } from '@angular/router';
 import { DelayedInputModule } from '../lib/delayed-input/delayed-input.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { ClickOutsideDirective } from './click-outside.directive';
+import { DividerModule } from 'primeng/divider';
+import {
+  NgxPermissionsModule,
+  NgxPermissionsRestrictStubModule,
+} from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -17,6 +23,7 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
     BreadcrumbComponent,
     FooterComponent,
     CartStatusComponent,
+    ClickOutsideDirective,
   ],
   exports: [NavbarComponent, BreadcrumbComponent, FooterComponent],
   imports: [
@@ -28,6 +35,8 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
     DelayedInputModule,
     FormsModule,
     ReactiveFormsModule,
+    DividerModule,
+    NgxPermissionsModule.forRoot(),
   ],
 })
 export class CoreModule {}
