@@ -17,14 +17,19 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    Page<Book> findByCategoryIdAndUnitPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);
-/*    Page<Book> findByFormatIdAndUnitPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);*/
-    Page<Book> findByAuthorContainingIgnoreCaseAndUnitPriceBetween (@Param("author") String author, Long startPrice, Long endPrice, Pageable pageable);
-    Page<Book> findAllByUnitPriceBetween(Pageable pageable, Long startPrice, Long endPrice);
+    Page<Book> findByCategoryIdAndFormatsPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);
+
+    @Query(value = "SELECT * FROM book b inner join book_format bf on bf.book_id = b.id where bf.format_id = 1", nativeQuery = true)
+    Page<Book> test(Pageable pageable);
+
+    Page<Book> findByAuthorContainingIgnoreCaseAndFormatsPriceBetween (@Param("author") String author, Long startPrice, Long endPrice, Pageable pageable);
+    Page<Book> findAllByFormatsPriceBetween(Pageable pageable, Long startPrice, Long endPrice);
+
+
     Page<Book> findByNameContainingIgnoreCase(@Param("title") String title, Pageable pageable);
     Optional<Book> findById(@Param("id") Long id);
 
-    @Query(value = "SELECT DISTINCT author, count(*) as bookCount FROM book  GROUP BY author ORDER BY author", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT author, count(*) as bookCount FROM book where deleted = 0  GROUP BY author ORDER BY author", nativeQuery = true)
     List<Map<String, Long>> findBookAuthors();
 
 

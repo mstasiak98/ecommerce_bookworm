@@ -15,6 +15,16 @@ public class BookFormatKey implements Serializable  {
     @Column(name = "format_id")
     Long formatId;
 
+    public BookFormatKey(Long bookId, Long formatId) {
+        super();
+        this.bookId = bookId;
+        this.formatId = formatId;
+    }
+
+    public BookFormatKey() {
+
+    }
+
     public Long getBookId() {
         return bookId;
     }
@@ -30,7 +40,6 @@ public class BookFormatKey implements Serializable  {
     public void setFormatId(Long formatId) {
         this.formatId = formatId;
     }
-
 
 
     @Override

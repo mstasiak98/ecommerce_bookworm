@@ -15,11 +15,11 @@ export class AppComponent {
     private rolesService: NgxRolesService,
     private permissionService: NgxPermissionsService
   ) {
-    const user = storageService.getUser();
+    /*    const user = storageService.getUser();
     console.log('user = ', user);
     if (user) {
       const roles = JSON.parse(user).roles;
       this.permissionService.loadPermissions(roles);
-    }
+    }*/
   }
 }

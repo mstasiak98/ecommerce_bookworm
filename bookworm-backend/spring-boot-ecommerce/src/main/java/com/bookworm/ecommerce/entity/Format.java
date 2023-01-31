@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,9 +22,10 @@ public class Format {
     private Set<Book> books;*/
 
 
-    @OneToMany(mappedBy = "format", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "format", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonBackReference
     Set<BookFormat> formats;
+
 
     public Set<BookFormat> getFormats() {
         return formats;
@@ -47,6 +49,15 @@ public class Format {
 
     public void setFormatName(String formatName) {
         this.formatName = formatName;
+    }
+
+    public void addFormat(BookFormat bookFormat) {
+        if(bookFormat != null) {
+            if(this.formats == null) {
+                this.formats = new HashSet<>();
+            }
+            this.formats.add(bookFormat);
+        }
     }
 
     @Override

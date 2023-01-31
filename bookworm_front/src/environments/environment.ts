@@ -4,12 +4,15 @@
 
 export const environment = {
   production: false,
+  fileUrl: 'http://localhost:8080/files',
   baseUrl: 'http://localhost:8080/api',
   categoryUrl: 'http://localhost:8080/api/book-category',
   formatUrl: 'http://localhost:8080/api/book-format',
   countriesUrl: 'http://localhost:8080/api/countries',
   placeOrderUrl: 'http://localhost:8080/api/checkout/purchase',
   orderUrl: 'http://localhost:8080/api/orders',
+  stripePublishableKey:
+    'pk_test_51MSPBiAzkd76A7dKeRf8tKhvveO7VGuCz6CPSTdWPnb0ml9oeWBo6gjog1E5JnKrza8F9BaBp7K480b2U8MtQQfN006aXK88mO',
 };
 
 /*

@@ -15,61 +15,68 @@ import { SharedModule } from '../../shared/shared.module';
 import { OrderPlacedComponent } from './components/order-placed/order-placed.component';
 import { OrdersHistoryComponent } from './components/orders-history/orders-history.component';
 import { AuthGuard } from '../../core/guards/auth.guard';
+import { EcommerceComponent } from './ecommerce.component';
+import { CoreModule } from '../../core/core.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 const routes: Routes = [
   {
-    path: 'order-history',
-    component: OrdersHistoryComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'order-placed/:ref',
-    component: OrderPlacedComponent,
-  },
-  {
-    path: 'author/:name',
-    component: BookListComponent,
-  },
-  {
-    path: 'format/:id',
-    component: BookListComponent,
-  },
-  {
-    path: 'category/:id',
-    component: BookListComponent,
-  },
-  {
-    path: 'category',
-    component: BookListComponent,
-  },
-  {
-    path: 'details/:id',
-    component: BookDetailsComponent,
-  },
-
-  {
-    path: 'books',
-    component: BookListComponent,
-  },
-
-  {
-    path: 'cart',
-    component: CartComponent,
-  },
-
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-  },
-
-  {
     path: '',
-    redirectTo: '/books',
-    pathMatch: 'full',
+    component: EcommerceComponent,
+    children: [
+      {
+        path: 'order-history',
+        component: OrdersHistoryComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'order-placed/:ref',
+        component: OrderPlacedComponent,
+      },
+      {
+        path: 'author/:name',
+        component: BookListComponent,
+      },
+      {
+        path: 'format/:id',
+        component: BookListComponent,
+      },
+      {
+        path: 'category/:id',
+        component: BookListComponent,
+      },
+      {
+        path: 'category',
+        component: BookListComponent,
+      },
+      {
+        path: 'details/:id',
+        component: BookDetailsComponent,
+      },
+
+      {
+        path: 'cart',
+        component: CartComponent,
+      },
+
+      {
+        path: 'checkout',
+        component: CheckoutComponent,
+      },
+      {
+        path: 'books',
+        component: BookListComponent,
+      },
+      {
+        path: '',
+        redirectTo: '/books',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '**',
-    redirectTo: '/books',
+    redirectTo: '',
     pathMatch: 'full',
   },
 ];
@@ -83,6 +90,7 @@ const routes: Routes = [
     CheckoutComponent,
     OrderPlacedComponent,
     OrdersHistoryComponent,
+    EcommerceComponent,
   ],
   imports: [
     CommonModule,
@@ -94,6 +102,8 @@ const routes: Routes = [
     TabMenuModule,
     SharedModule,
     ReactiveFormsModule,
+    CoreModule,
+    NgxPermissionsModule.forRoot(),
   ],
 })
 export class EcommerceModule {}

@@ -1,0 +1,25 @@
+<div class="w-full">
+  <form class="w-full" [formGroup]="form" (submit)="submit()">
+    <div class="w-full flex flex-col mt-4">
+      <label for="firstName">City</label>
+      <input
+        formControlName="firstName"
+        id="firstName"
+        type="text"
+        pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-4">
+      <label for="lastName">Zip code</label>
+      <input formControlName="lastName" id="lastName" type="text" pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-4">
+      <label for="email">Email</label>
+      <input formControlName="email" id="email" type="email" pInputText />
+    </div>
+    <div class="w-full flex justify-start mt-6">
+      <button [disabled]="form.invalid || form.pristine" pButton type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

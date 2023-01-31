@@ -1,0 +1,140 @@
+<div *ngIf="books" class="w-full p-12">
+  <div class="flex flex-row justify-between">
+    <h3 class="text-2xl font-bold mb-4">List of available books</h3>
+    <button
+      (click)="openNewBookDialog()"
+      pButton
+      label="New"
+      icon="pi pi-plus"
+      class="p-button-success mr-2"></button>
+  </div>
+  <hr class="my-4" />
+
+  <div class="w-full">
+    <p-table
+      #dt
+      [value]="books"
+      [totalRecords]="totalRecords"
+      dataKey="id"
+      [rowHover]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [filterDelay]="0"
+      [globalFilterFields]="['code', 'name']">
+      <ng-template pTemplate="caption">
+        <div class="w-full flex justify-between">
+          <div class="table-header">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Global Search" />
+            </span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="w-[100px]"></th>
+          <th pSortableColumn="sku" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Sku
+              <p-sortIcon field="sku"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="name" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Name
+              <p-sortIcon field="name"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="author" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Author
+              <p-sortIcon field="author"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="category" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Category
+              <p-sortIcon field="category"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="formats" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Formats
+              <p-sortIcon field="formats"></p-sortIcon>
+            </div>
+          </th>
+          <th style="width: 10rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+        <tr class="p-selectable-row">
+          <td>
+            <img src="{{ book?.imageUrl }}" class="w-[50px] h-[50px]" />
+          </td>
+          <td>
+            <span class="p-column-title">Id</span>
+            {{ book?.sku }}
+          </td>
+          <td>
+            <span class="p-column-title">Name</span>
+            {{ book?.name }}
+          </td>
+          <td>
+            <span class="p-column-title">Code</span>
+            {{ book?.author }}
+          </td>
+          <td>
+            <span class="p-column-title">Name</span>
+            <p-chip>{{ book?.category?.categoryName }}</p-chip>
+          </td>
+          <td>
+            <div class="flex flex-col gap-y-2">
+              <div *ngFor="let format of book?.formats">
+                <p-chip>
+                  <span>{{ format.format.formatName }} - </span>
+                  <span class="font-bold">{{
+                    format.price | currency : 'USD'
+                  }}</span></p-chip
+                >
+              </div>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <div class="flex flex-row">
+              <button
+                pTooltip="Details"
+                tooltipPosition="bottom"
+                routerLink="/admin/books/{{ book?.id }}"
+                pButton
+                icon="pi pi-search-plus"
+                class="p-button-lg p-button-link"></button>
+              <button
+                (click)="deleteBook(book)"
+                pTooltip="{{ book.deleted ? 'Restore' : 'Delete' }}"
+                tooltipPosition="bottom"
+                pButton
+                icon="pi {{ book.deleted ? 'pi-history' : 'pi-trash' }}"
+                class="p-button-lg p-button-link"></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No countries found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"></p-confirmDialog>

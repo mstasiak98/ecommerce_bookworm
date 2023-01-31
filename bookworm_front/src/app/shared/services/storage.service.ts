@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
   private readonly USER_KEY = 'auth_user';
+  private readonly ADMIN_KEY = 'ROLE_ADMIN';
 
   constructor() {}
 
@@ -26,5 +27,13 @@ export class StorageService {
   public isLoggedIn(): boolean {
     const user = sessionStorage.getItem(this.USER_KEY);
     return !!user;
+  }
+
+  public isAdmin(): boolean {
+    const user = sessionStorage.getItem(this.USER_KEY);
+    if (user) {
+      return JSON.parse(user).roles.includes(this.ADMIN_KEY);
+    }
+    return false;
   }
 }

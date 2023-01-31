@@ -1,0 +1,29 @@
+ul {
+  list-style-type: none;
+}
+
+ul li {
+  padding: 8px 0;
+  border-top: 1px solid #f9f8fb;
+}
+
+ul li:first-child {
+  border-top: none;
+}
+
+ul li:hover a {
+  background: #f9f8fb;
+}
+
+.active {
+  background: #f5f4fd;
+  font-weight: bold;
+}
+
+ul li a {
+  display: block;
+  padding: 20px;
+  color: black;
+  text-decoration: none;
+  border-radius: 4px;
+}

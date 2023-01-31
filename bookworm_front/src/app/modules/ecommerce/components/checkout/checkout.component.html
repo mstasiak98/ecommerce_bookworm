@@ -161,63 +161,13 @@
               </div>
             </div>
           </div>
-          <div formGroupName="extra" class="form-group w-full flex flex-col">
-            <label for="extra">Order notes (optional)</label>
-            <textarea
-              formControlName="orderNotes"
-              id="extra"
-              placeholder="Additional notes about your order"></textarea>
-          </div>
-          <div
-            formGroupName="creditCard"
-            class="form-group w-full flex flex-col">
-            <div class="form-group w-full flex flex-col">
-              <label for="card-type">Card Type</label>
-              <select formControlName="cardType" id="card-type">
-                <option>Visa</option>
-                <option>Mastercard</option>
-              </select>
-            </div>
-            <div class="form-group w-full flex flex-col">
-              <label for="name-card">Name on card</label>
-              <input
-                formControlName="nameOnCard"
-                placeholder="Name on card"
-                id="name-card"
-                type="text" />
-            </div>
-            <div class="form-group w-full flex flex-col">
-              <label for="card-number">Card number</label>
-              <input
-                formControlName="cardNumber"
-                placeholder="Name on card"
-                id="card-number"
-                type="text" />
-            </div>
-            <div class="form-group w-full flex flex-col">
-              <label for="security-code">Security code</label>
-              <input
-                formControlName="securityCode"
-                placeholder="Security code"
-                id="security-code"
-                type="text" />
-            </div>
-            <div class="form-group w-full flex flex-col">
-              <label for="expiration-month">Expiration month</label>
-              <select formControlName="expirationMonth" id="expiration-month">
-                <option *ngFor="let month of creditCardMonths">
-                  {{ month }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group w-full flex flex-col">
-              <label for="expiration-year">Expiration year</label>
-              <select formControlName="expirationYear" id="expiration-year">
-                <option *ngFor="let year of creditCardYears">
-                  {{ year }}
-                </option>
-              </select>
-            </div>
+          <hr />
+
+          <!--stripe elements credit card section-->
+          <div class="mt-6">
+            <h3 class="text-lg font-medium mb-4">Credit or Debit Card</h3>
+            <div id="card-element"></div>
+            <div id="card-errors"></div>
           </div>
         </div>
         <div class="w-full md:w-1/4 flex flex-col">
@@ -266,60 +216,10 @@
               </div>
             </div>
           </div>
-          <div class="border-[1px] border-black bg-white flex flex-col">
-            <div class="flex flex-col p-6">
-              <h4 class="font-medium text-lg mb-8">Payment</h4>
-              <div class="payments flex flex-col mb-4 pl-1">
-                <ul>
-                  <li>
-                    <div class="flex flex-col">
-                      <div class="flex flex-row items-center mb-4">
-                        <input
-                          type="radio"
-                          id="transfer"
-                          name="payment" /><label
-                          class="ml-4 text-sm mb-0 relative z-10"
-                          for="transfer"
-                          >Direct bank transfer</label
-                        >
-                      </div>
-                      <div class="details text-sm p-4">
-                        Make your payment directly into our bank account. Please
-                        use your Order ID as the payment reference. Your order
-                        will not be shipped until the funds have cleared in our
-                        account.
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="flex flex-col">
-                      <div class="flex flex-row items-center">
-                        <input type="radio" id="cash" name="payment" /><label
-                          class="ml-4 text-sm mb-0 relative z-100"
-                          for="cash"
-                          >Cash on delivery</label
-                        >
-                      </div>
-                      <div class="details text-sm mt-4 p-4">
-                        Pay with cash upon delivery.
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <hr />
-            <div class="flex flex-col p-6">
-              <p class="text-sm text-gray-700">
-                Your personal data will be used to process your order, support
-                your experience throughout this website, and for other purposes
-                described in our privacy policy.
-              </p>
-            </div>
-          </div>
-
           <div class="w-full mt-8">
             <button
+              [disabled]="isDisabled"
+              [ngClass]="{ disabled: isDisabled }"
               type="submit"
               class="w-full py-4 bg-[#161619] text-white hover:bg-black">
               Place Order

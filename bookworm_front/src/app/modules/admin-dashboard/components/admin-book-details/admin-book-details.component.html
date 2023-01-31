@@ -1,0 +1,156 @@
+<div *ngIf="book" class="w-full p-12">
+  <div class="w-full flex flex-row justify-between">
+    <h3 class="text-2xl font-bold mb-4">Book details</h3>
+    <div class="flex flex-row gap-x-4 items-center">
+      <button
+        (click)="openEditDialog()"
+        pTooltip="Edit book"
+        tooltipPosition="bottom"
+        pButton
+        icon="pi pi-pencil"
+        class="p-button-lg p-button-link hover:text-custom-red-strong"></button>
+      <button
+        (click)="deleteBook(book)"
+        pTooltip="{{ book.deleted ? 'Restore' : 'Delete' }}"
+        tooltipPosition="bottom"
+        pButton
+        icon="pi {{ book.deleted ? 'pi-history' : 'pi-trash' }}"
+        class="p-button-lg p-button-link"></button>
+    </div>
+  </div>
+  <hr />
+  <div class="flex flex-row gap-x-8 mb-4 items-center">
+    <div class="flex flex-col">
+      <img
+        class="mt-4 w-[240px] h-[320px] object-cover"
+        src="{{ book?.imageUrl }}" />
+      <label>
+        <div
+          class="w-full flex justify-center underline font-medium hover:text-custom-red-strong cursor-pointer">
+          {{ isFileUploading ? 'Uploading...' : 'Change cover' }}
+        </div>
+        <div
+          class="w-full flex justify-center underline font-medium hover:text-custom-red-strong cursor-pointer"></div>
+        <input
+          *ngIf="!isFileUploading"
+          id="input"
+          (change)="changedCoverFile($event)"
+          class="mt-2 hidden"
+          type="file" />
+      </label>
+    </div>
+    <hr class="my-4" />
+    <div class="mt-4 flex flex-col w-full items-center">
+      <div
+        class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+        <div class="w-1/2 text-[1rem] font-medium">Title:</div>
+        <div class="w-1/2 text-[1rem]">{{ book?.name }}</div>
+      </div>
+      <div
+        class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+        <div class="w-1/2 text-[1rem] font-medium">SKU:</div>
+        <div class="w-1/2 text-[1rem]">{{ book?.sku }}</div>
+      </div>
+      <div
+        class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+        <div class="w-1/2 text-[1rem] font-medium">Author:</div>
+        <div class="w-1/2 text-[1rem]">{{ book?.author }}</div>
+      </div>
+      <div
+        class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+        <div class="w-1/2 text-[1rem] font-medium">Page count:</div>
+        <div class="w-1/2 text-[1rem]">{{ book?.pageCount }}</div>
+      </div>
+      <div
+        class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+        <div class="w-1/2 text-[1rem] font-medium">Category:</div>
+        <div class="w-1/2 text-[1rem]">{{ book?.category?.categoryName }}</div>
+      </div>
+      <div
+        class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+        <div class="w-1/2 text-[1rem] font-medium">Date created:</div>
+        <div class="w-1/2 text-[1rem]">{{ book?.dateCreated | date }}</div>
+      </div>
+    </div>
+  </div>
+  <hr class="my-4" />
+  <p>
+    {{ book?.description }}
+  </p>
+  <hr class="mt-4 mb-4" />
+  <div>
+    <div class="flex flex-row justify-between">
+      <h3 class="text-2xl font-bold mb-4">List of available formats</h3>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Units in stock</th>
+          <th>Price</th>
+          <th class="w-[10rem]"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let format of book?.formats; let i = index">
+          <td>{{ format.format.formatName }}</td>
+          <td>
+            <span [style.display]="selected !== i ? 'flex' : 'none'">{{
+              format.quantity
+            }}</span>
+
+            <input
+              [style.display]="selected === i ? 'flex' : 'none'"
+              [(ngModel)]="quantity"
+              type="number"
+              pInputText />
+          </td>
+          <td>
+            <span [style.display]="selected !== i ? 'flex' : 'none'">
+              {{ format.price | currency : 'USD' }}
+            </span>
+
+            <input
+              [style.display]="selected === i ? 'flex' : 'none'"
+              [(ngModel)]="price"
+              type="number"
+              pInputText />
+          </td>
+          <td>
+            <div
+              [style.display]="selected === i ? 'flex' : 'none'"
+              class="h-full flex flex-row items-center justify-center">
+              <button
+                (click)="editBookFormat(format, i)"
+                pTooltip="Save"
+                tooltipPosition="bottom"
+                pButton
+                icon="pi pi-check-circle"
+                class="p-button-lg p-button-link"></button>
+              <button
+                (click)="toggleEditMode(format, i)"
+                pTooltip="Cancel"
+                tooltipPosition="bottom"
+                pButton
+                icon="pi pi-times-circle"
+                class="p-button-lg p-button-link"></button>
+            </div>
+            <button
+              [style.display]="selected !== i ? 'flex' : 'none'"
+              (click)="toggleEditMode(format, i)"
+              pTooltip="Change"
+              tooltipPosition="bottom"
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-lg p-button-link"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"></p-confirmDialog>

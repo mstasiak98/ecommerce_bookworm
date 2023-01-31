@@ -1,0 +1,9 @@
+<div class="w-full">
+  <div class="flex flex-col">
+    <label for="category">Category name</label>
+    <input [(ngModel)]="categoryName" id="category" type="text" pInputText />
+  </div>
+  <div class="w-full flex justify-start py-4">
+    <button (click)="submit()" pButton type="submit">Save</button>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="w-full">
+  <form class="w-full" [formGroup]="form" (submit)="submit()">
+    <div class="w-full flex flex-col">
+      <label for="sku">Sku</label>
+      <input formControlName="sku" id="sku" type="text" pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-2">
+      <label for="name">Title</label>
+      <input formControlName="name" id="name" type="text" pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-2">
+      <label for="author">Author</label>
+      <input formControlName="author" id="author" type="text" pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-2">
+      <label for="pageCount">Page count</label>
+      <input
+        formControlName="pageCount"
+        id="pageCount"
+        type="number"
+        [min]="1"
+        pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-2">
+      <label for="category">Category</label>
+      <p-dropdown
+        id="category"
+        [options]="categories"
+        optionLabel="categoryName"
+        optionValue="id"
+        formControlName="categoryId"></p-dropdown>
+    </div>
+    <div class="w-full flex flex-col mt-2">
+      <label for="format">Book format</label>
+      <p-multiSelect
+        id="format"
+        [options]="bookFormats"
+        optionLabel="formatName"
+        optionValue="id"
+        formControlName="formatIds"></p-multiSelect>
+    </div>
+    <div class="w-full flex flex-col mt-2">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        pInputTextarea></textarea>
+    </div>
+    <div *ngIf="!isEdit" class="w-full flex flex-col mt-4">
+      <input (change)="selectedFile($event)" type="file" />
+    </div>
+    <div class="w-full flex justify-start mt-6">
+      <button [disabled]="form.invalid || form.pristine" pButton type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

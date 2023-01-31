@@ -1,0 +1,177 @@
+<div class="order-details-content w-full p-12">
+  <div
+    class="w-full border-b-[#d7d6d5] border-b-2 mb-4 flex justify-start py-4 justify-between">
+    <div *ngIf="order" class="flex items-center">
+      <h4 class="text-2xl font-bold mr-4">Order status:</h4>
+      <p-dropdown
+        (onChange)="statusChanged($event)"
+        [options]="orderStatuses"
+        [(ngModel)]="order.status"
+        optionLabel="name"
+        optionValue="id"></p-dropdown>
+    </div>
+    <div class="flex gap-x-6">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-file"
+        class="p-button-raised"
+        label="Generate invoice"></button>
+      <button
+        (click)="deleteOrder()"
+        pButton
+        icon="pi pi-trash"
+        type="button"
+        class="p-button-raised p-button-danger"
+        style="color: white !important"></button>
+    </div>
+  </div>
+  <div class="w-full grid grid-cols-1 lg:grid-cols-2">
+    <div>
+      <div class="w-full md:w-1/2 flex justify-between items-center mb-4">
+        <h3 class="title text-2xl font-bold">Customer</h3>
+        <button
+          (click)="openCustomerDialog()"
+          pButton
+          type="button"
+          label="Edit"
+          class="p-button-raised p-button-success"></button>
+      </div>
+      <div class="mt-4 pr-8 flex flex-col w-full md:w-3/4 items-center">
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">First name:</div>
+          <div class="w-3/4 text-[1rem]">{{ order?.customer?.firstName }}</div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">Last name:</div>
+          <div class="w-3/4 text-[1rem]">{{ order?.customer?.lastName }}</div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">Email:</div>
+          <div class="w-3/4 text-[1rem]">{{ order?.customer?.email }}</div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 flex justify-between items-center my-4">
+        <h3 class="title text-2xl font-bold">Billing Address</h3>
+        <button
+          (click)="openAddressDialog('billing')"
+          pButton
+          type="button"
+          label="Edit"
+          class="p-button-raised p-button-success"></button>
+      </div>
+      <div class="mt-4 pr-8 flex flex-col w-full md:w-3/4 items-center">
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">Street:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.billingAddress?.street }}
+          </div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">City:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.billingAddress?.city }},
+            {{ order?.billingAddress?.zipCode }}
+          </div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">State:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.billingAddress?.state }},
+            {{ order?.billingAddress?.country }}
+          </div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 flex justify-between items-center my-4">
+        <h3 class="title text-2xl font-bold">Shipping Address</h3>
+        <button
+          (click)="openAddressDialog('shipping')"
+          pButton
+          type="button"
+          label="Edit"
+          class="p-button-raised p-button-success"></button>
+      </div>
+      <div class="mt-4 pr-8 flex flex-col w-full md:w-3/4 items-center">
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">Street:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.shippingAddress?.street }}
+          </div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">City:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.shippingAddress?.city }},
+            {{ order?.shippingAddress?.zipCode }}
+          </div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-medium">State:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.shippingAddress?.state }},
+            {{ order?.shippingAddress?.country }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="title text-2xl font-bold mb-4">Order details</h3>
+      <div class="mt-4 pr-8 flex flex-col w-full md:w-3/4 items-center">
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-bold">Tracking number:</div>
+          <div class="w-3/4 text-[1rem]">{{ order?.orderTrackingNumber }}</div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-bold">Date created:</div>
+          <div class="w-3/4 text-[1rem]">{{ order?.dateCreated }}</div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-bold">Total quantity:</div>
+          <div class="w-3/4 text-[1rem]">{{ order?.totalQuantity }}</div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-bold">Total price:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ order?.totalPrice | currency : 'USD' }}
+          </div>
+        </div>
+      </div>
+      <h3 class="title mt-4 text-2xl font-bold mb-4">Order items</h3>
+      <div class="mt-4 pr-8 flex flex-col w-full md:w-3/4 items-center">
+        <div
+          *ngFor="let item of order?.orderItems; let idx = index"
+          class="w-full flex flex-col md:flex-row items-center hover:bg-gray-200 py-4">
+          <div class="w-1/4 text-[1rem] font-bold">Order {{ idx + 1 }}:</div>
+          <div class="w-3/4 text-[1rem]">
+            {{ item.book.name }}, {{ item.quantity }} x
+            {{ item.unitPrice | currency : 'USD' }}, ({{ item.formatName }})
+          </div>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row items-center py-4 mt-4 border-t-[#d7d6d5] border-t-2">
+          <div class="w-1/4 text-[1.5rem] font-bold">Total:</div>
+          <div class="w-3/4 text-[1.5rem] font-bold">
+            {{ order?.totalPrice | currency : 'USD' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"></p-confirmDialog>

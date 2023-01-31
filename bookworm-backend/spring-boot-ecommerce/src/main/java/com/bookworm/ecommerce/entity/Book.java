@@ -1,20 +1,28 @@
 package com.bookworm.ecommerce.entity;
 
+import com.bookworm.ecommerce.dto.BookData;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import jakarta.validation.Constraint;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "book")
+@SQLDelete(sql = "UPDATE book SET deleted = true WHERE id=?")
+@FilterDef(name = "deletedBookFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
+@Filter(name = "deletedBookFilter", condition = "deleted = false or deleted = :isDeleted")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,17 +31,12 @@ public class Book {
     @JoinColumn(name = "category_id", nullable = false)
     private BookCategory category;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonManagedReference
     Set<BookFormat> formats;
 
-    public Set<BookFormat> getFormats() {
-        return formats;
-    }
-
-    public void setFormats(Set<BookFormat> formats) {
-        this.formats = formats;
-    }
+    @Column(name = "deleted")
+    private boolean deleted = Boolean.FALSE;
 
     @Column(name = "sku")
     private String sku;
@@ -59,6 +62,43 @@ public class Book {
     @Column(name = "last_updated")
     @UpdateTimestamp
     private Date lastUpdated;
+
+    public Book(BookData bookData) {
+        this.sku = bookData.getSku();
+        this.name = bookData.getName();
+        this.author = bookData.getAuthor();
+        this.description = bookData.getDescription();
+        this.pageCount = bookData.getPageCount();
+    }
+    public Book(BookCategory category, String sku, String name, String author, String description, int pageCount, String imageUrl) {
+        this.category = category;
+        this.sku = sku;
+        this.name = name;
+        this.author = author;
+        this.description = description;
+        this.pageCount = pageCount;
+        this.imageUrl = imageUrl;
+    }
+
+    public Book() {
+
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Set<BookFormat> getFormats() {
+        return formats;
+    }
+
+    public void setFormats(Set<BookFormat> formats) {
+        this.formats = formats;
+    }
 
     public Long getId() {
         return id;
@@ -162,6 +202,16 @@ public class Book {
 
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+
+    public void addFormat(BookFormat bookFormat) {
+        if(bookFormat != null) {
+            if(this.formats == null) {
+                this.formats = new HashSet<>();
+            }
+            this.formats.add(bookFormat);
+        }
     }
 
     @Override

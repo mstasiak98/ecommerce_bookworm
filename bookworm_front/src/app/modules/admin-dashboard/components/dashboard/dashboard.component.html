@@ -1,0 +1,30 @@
+<div *ngIf="widgetData; else loader" class="w-full px-6 bg-[#f5f4fd]">
+  <div class="flex flex-wrap justify-between bg-white py-8 px-12">
+    <app-widget class="w-[250px]" [widgetInfo]="widgetOrders"></app-widget>
+    <app-widget class="w-[250px]" [widgetInfo]="widgetEarnings"></app-widget>
+    <app-widget class="w-[250px]" [widgetInfo]="widgetClients"></app-widget>
+    <app-widget class="w-[250px]" [widgetInfo]="widgetBooksSold"></app-widget>
+  </div>
+  <div class="mt-8 w-full flex gap-x-12 bg-white p-12">
+    <div class="w-[60%]">
+      <h2 class="text-2xl mb-6 text-center font-bold">Book sales</h2>
+      <p-chart type="line" height="400px" [data]="salesData"></p-chart>
+    </div>
+    <div class="w-[40%] flex flex-col">
+      <h2 class="text-2xl mb-6 font-bold text-center">
+        Top selling categories
+      </h2>
+      <p-chart
+        type="pie"
+        width="100%"
+        height="400px"
+        [data]="categoryChartData"></p-chart>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="h-screen flex items-center justify-center">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</ng-template>

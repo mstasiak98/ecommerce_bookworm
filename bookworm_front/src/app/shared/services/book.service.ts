@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { map, Observable, Subject, Subscription } from 'rxjs';
+import { map, Observable, of, Subject, Subscription } from 'rxjs';
 import { Book } from '../../core/models/book';
 import { BookCategory } from '../../core/models/book-category';
 import { BookFormat } from '../../core/models/book-format';
 import { Author } from '../../core/models/author';
 import { PriceFilter } from '../../modules/ecommerce/components/book-list/book-list.component';
+import { ObjectAssignBuiltinFn } from '@angular/compiler-cli/src/ngtsc/partial_evaluator/src/builtin';
+import { ConfirmationService } from 'primeng/api';
+import { BookFormData } from '../../core/models/book-form-data';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,45 @@ export class BookService {
   private readonly formatUrl = `${environment.formatUrl}`;
   triggerKeywordSearch = new Subject<string>();
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private confirmationService: ConfirmationService
+  ) {}
+
+  setFormatParams(bookFormData: BookFormData): Observable<BookFormat> {
+    const url = `${this.baseUrl}/book/set-format-params`;
+    return this.httpClient.put<BookFormat>(url, bookFormData);
+  }
+
+  deleteRestoreBook(bookId: number, isRestore: boolean): Observable<boolean> {
+    const action = isRestore ? 'restore' : 'remove';
+    const url = `${this.baseUrl}/${action}/${bookId}`;
+    return this.httpClient.delete<boolean>(url);
+  }
+
+  changeCover(bookId: number, formData: FormData): Observable<any> {
+    const url = `${this.baseUrl}/change-cover/${bookId}`;
+    return this.httpClient.put<any>(url, formData);
+  }
+
+  addBook(formData: FormData): Observable<Book> {
+    const url = `${this.baseUrl}/add`;
+    return this.httpClient.post<Book>(url, formData);
+  }
+
+  editBook(id: number, formData: FormData): Observable<Book> {
+    const url = `${this.baseUrl}/edit/${id}`;
+    return this.httpClient.put<Book>(url, formData);
+  }
+
+  getAllBooks(isDeleted: boolean = false): Observable<any> {
+    const url = `${this.baseUrl}/all`;
+    return this.httpClient.get(url, {
+      params: {
+        isDeleted: isDeleted,
+      },
+    });
+  }
 
   getBookDetails(bookId: number): Observable<Book> {
     const url = `${this.baseUrl}/bookDetails?id=${bookId}`;
@@ -31,7 +72,7 @@ export class BookService {
     pageNumber: number
   ): Observable<GetResponse> {
     if (parameterId < 0) {
-      return this.getAllBooks(priceFilter, pageNumber);
+      return this.getBooks(priceFilter, pageNumber);
     } else if (filterParameter === 'category') {
       return this.getBookListByCategory(parameterId, priceFilter, pageNumber);
     } else {
@@ -56,7 +97,7 @@ export class BookService {
     return this.httpClient.get<GetResponse>(searchUrl);
   }
 
-  private getAllBooks(priceFilter: PriceFilter, pageNumber: number) {
+  private getBooks(priceFilter: PriceFilter, pageNumber: number) {
     const searchUrl = `${this.baseUrl}?startPrice=${priceFilter.startPrice}&endPrice=${priceFilter.endPrice}&page=${pageNumber}`;
     return this.httpClient.get<GetResponse>(searchUrl);
   }

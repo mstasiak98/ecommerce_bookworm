@@ -16,6 +16,7 @@ import {
   NgxPermissionsModule,
   NgxPermissionsRestrictStubModule,
 } from 'ngx-permissions';
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,14 @@ import {
     FooterComponent,
     CartStatusComponent,
     ClickOutsideDirective,
+    ClickStopPropagationDirective,
   ],
-  exports: [NavbarComponent, BreadcrumbComponent, FooterComponent],
+  exports: [
+    NavbarComponent,
+    BreadcrumbComponent,
+    FooterComponent,
+    ClickStopPropagationDirective,
+  ],
   imports: [
     CommonModule,
     InputTextModule,

@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./book-list-sidebar.component.scss'],
 })
 export class BookListSidebarComponent implements OnInit {
-  priceRangeValues: number[] = [0, 100];
+  priceRangeValues: number[] = [5, 100];
   bookCategories: BookCategory[] = [];
   bookFormats: { id: number; formatName: string }[] = [];
   bookAuthors: Author[] = [];

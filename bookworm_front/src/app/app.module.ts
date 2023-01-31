@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './core/interceptors/auth.interceptor';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,8 +22,14 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxPermissionsModule.forRoot(),
+    DynamicDialogModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    DialogService,
+    MessageService,
+    ConfirmationService,
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })

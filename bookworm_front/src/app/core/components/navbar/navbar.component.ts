@@ -24,21 +24,14 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = storageService.isLoggedIn();
   }
 
-  ngOnInit(): void {
-    console.log('roles', this.roleService.getRoles());
-  }
+  ngOnInit(): void {}
 
   searchByKeyword(event: Event) {
-    console.log('event = ', event);
     this.bookService.triggerSearchByKeyword(this.keyword);
   }
 
   logout() {
-    console.log('out');
     this.authService.logout().subscribe({
-      next: res => {
-        console.log('res = ', res);
-      },
       error: err => {
         console.log('err', err);
       },

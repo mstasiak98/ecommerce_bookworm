@@ -1,5 +1,6 @@
 package com.bookworm.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,14 +30,14 @@ public class Order {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
     @Column(name = "status")
-    private String status;
+    private int status;
     @Column(name = "date_created")
     @CreationTimestamp
     private Date dateCreated;
 
     @Column(name = "last_updated")
     @UpdateTimestamp
-    private Date lastUpdates;
+    private Date lastUpdated;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private Set<OrderItem> orderItems = new HashSet<>();

@@ -1,5 +1,6 @@
 package com.bookworm.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,18 @@ public class Address {
 
     @OneToOne
     @PrimaryKeyJoinColumn
+    @JsonBackReference
     private Order order;
 
+    public Address(Address oldAddress) {
+        this.city = oldAddress.getCity();
+        this.country = oldAddress.getCountry();
+        this.state = oldAddress.getState();
+        this.street = oldAddress.getStreet();
+        this.zipCode = oldAddress.getZipCode();
+    }
+
+    public Address() {
+
+    }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,6 +13,13 @@ import java.util.Set;
 @Getter
 @Setter
 public class Country {
+
+
+    public Country() {}
+    public Country(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +31,17 @@ public class Country {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<State> states;
+    private Set<State> states = new HashSet<>();
+
+    public void add(State state) {
+        if(state != null) {
+            if(this.states == null) {
+                this.states = new HashSet<>();
+            }
+            this.states.add(state);
+            state.setCountry(this);
+        }
+    }
 }

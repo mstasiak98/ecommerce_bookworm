@@ -10,6 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class State {
+
+
+    public State(String name, Country country) {
+        this.name = name;
+        this.country = country;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,4 +29,8 @@ public class State {
     @JoinColumn(name = "country_id")
     @JsonBackReference
     private Country country;
+
+    public State() {
+
+    }
 }

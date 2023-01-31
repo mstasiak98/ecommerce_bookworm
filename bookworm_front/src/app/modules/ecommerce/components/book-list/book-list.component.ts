@@ -73,7 +73,6 @@ export class BookListComponent implements OnInit, OnDestroy {
 
   private processResult() {
     return (data: any) => {
-      console.log('data', data);
       this.books = data.content;
       this.pageNumber = data.number;
       this.pageSize = data.size;

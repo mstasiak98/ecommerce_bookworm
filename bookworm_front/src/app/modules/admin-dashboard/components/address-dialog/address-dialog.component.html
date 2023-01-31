@@ -1,0 +1,42 @@
+<div class="w-full">
+  <form class="w-full" [formGroup]="form" (submit)="submit()">
+    <div class="w-full flex flex-col mt-4">
+      <label for="country">Country</label>
+      <p-dropdown
+        placeholder="Choose city"
+        id="country"
+        [options]="countries"
+        formControlName="country"
+        (onChange)="changedCountry($event)"
+        optionLabel="name"
+        optionValue="name"></p-dropdown>
+    </div>
+    <div class="w-full flex flex-col mt-4">
+      <label for="country">State</label>
+      <p-dropdown
+        placeholder="Choose state"
+        id="state"
+        [options]="states"
+        formControlName="state"
+        optionLabel="name"
+        optionValue="name"></p-dropdown>
+    </div>
+    <div class="w-full flex flex-col">
+      <label for="street">Street</label>
+      <input formControlName="street" id="street" type="text" pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-4">
+      <label for="street">City</label>
+      <input formControlName="city" id="city" type="text" pInputText />
+    </div>
+    <div class="w-full flex flex-col mt-4">
+      <label for="street">Zip code</label>
+      <input formControlName="zipCode" id="zipCode" type="text" pInputText />
+    </div>
+    <div class="w-full flex justify-start mt-6">
+      <button [disabled]="form.invalid || form.pristine" pButton type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

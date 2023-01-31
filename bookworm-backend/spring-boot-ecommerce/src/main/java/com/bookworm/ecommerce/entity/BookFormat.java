@@ -3,6 +3,8 @@ package com.bookworm.ecommerce.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 
@@ -10,7 +12,7 @@ import java.io.Serializable;
 public class BookFormat {
 
     @EmbeddedId
-    BookFormatKey id;
+    private BookFormatKey id;
     @ManyToOne
     @MapsId("bookId")
     @JoinColumn(name = "book_id")
@@ -22,9 +24,30 @@ public class BookFormat {
     @JsonManagedReference
     Format format;
 
+
+    @PreRemove
+    private void removeBookFormat() {
+        this.getBook().formats.remove(this);
+        this.getFormat().formats.remove(this);
+    }
+
+
     double price;
     int quantity;
 
+    public BookFormat(BookFormatKey id) {
+        this.id = id;
+    }
+
+    public BookFormat(BookFormatKey id, double price, int quantity) {
+        this.id = id;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public BookFormat() {
+
+    }
 
     public BookFormatKey getId() {
         return id;

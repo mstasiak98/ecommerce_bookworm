@@ -1,5 +1,6 @@
 package com.bookworm.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Order> orders = new HashSet<>();
 
     public void add(Order order) {

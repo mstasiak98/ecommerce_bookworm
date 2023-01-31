@@ -12,12 +12,10 @@
             class="book-card"
             routerLink="/shop/details/{{ book.id }}">
             <div class="w-full h-full flex flex-col items-center relative">
-              <div>
+              <div class="w-[150px] h-[200px]">
                 <img
                   src="{{ book.imageUrl }}"
-                  width="150"
-                  height="200"
-                  class="object-contain" />
+                  class="w-full h-full object-cover" />
               </div>
               <div class="card-content w-full flex flex-col items-start pt-6">
                 <div class="flex flex-wrap">

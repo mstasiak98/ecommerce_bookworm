@@ -18,6 +18,40 @@ export class CheckoutFormService {
       .pipe(map(resp => resp._embedded.countries));
   }
 
+  checkStateExistByName(name: string): Observable<boolean> {
+    const url = `${this.BASE_URL}/countries/stateByName?name=${name}`;
+    return this.httpClient.get<boolean>(url);
+  }
+
+  assignState(stateData: any): Observable<any> {
+    const url = `${this.BASE_URL}/countries/add-state`;
+    return this.httpClient.post(url, stateData);
+  }
+
+  addCountry(countryData: any): Observable<Country> {
+    const url = `${this.BASE_URL}/countries/add`;
+    return this.httpClient.post<Country>(url, countryData);
+  }
+
+  editCountry(countryId: number, countryData: any): Observable<Country> {
+    const url = `${this.BASE_URL}/countries/edit/${countryId}`;
+    return this.httpClient.put<Country>(url, countryData);
+  }
+
+  deleteState(stateId: number): Observable<boolean> {
+    const url = `${this.BASE_URL}/countries/remove-state`;
+    return this.httpClient.post<boolean>(url, null, {
+      params: {
+        id: stateId,
+      },
+    });
+  }
+
+  deleteCountry(countryId: number): Observable<boolean> {
+    const url = `${this.BASE_URL}/countries/delete/${countryId}`;
+    return this.httpClient.delete<boolean>(url);
+  }
+
   getCreditCardMonths(): Observable<number[]> {
     const startMonth: number = new Date().getMonth() + 1;
     let months: number[] = [];

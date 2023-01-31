@@ -1,0 +1,48 @@
+<div class="w-full max-h-[600px]">
+  <form class="w-full" [formGroup]="form" (submit)="submit()">
+    <div class="w-full flex flex-col">
+      <label for="name">Country name</label>
+      <input formControlName="name" id="name" type="text" pInputText />
+    </div>
+    <div class="mt-4 mb-4 w-full flex flex-col">
+      <label for="code">Country code</label>
+      <input formControlName="code" id="code" type="text" pInputText />
+    </div>
+    <hr />
+    <div
+      formArrayName="states"
+      *ngFor="let state of stateControls().controls; let i = index"
+      class="mt-4 mb-4 w-full flex flex-col">
+      <div [formGroupName]="i" class="w-full flex flex-col mr-4">
+        <label for="stateName">State name</label>
+        <div class="flex items-center w-full">
+          <input
+            class="w-full"
+            formControlName="stateName"
+            id="stateName"
+            type="text"
+            pInputText />
+          <i
+            (click)="deleteState(i)"
+            class="ml-4 pi pi-minus-circle cursor-pointer">
+          </i>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 flex items-center" (click)="addState()">
+      <i class="pi pi-plus-circle mr-2"></i>
+      <span class="font-medium hover:underline cursor-pointer"
+        >Add country state</span
+      >
+    </div>
+    <div class="w-full flex justify-start py-4">
+      <button
+        [loading]="isSaving"
+        [disabled]="form.invalid"
+        pButton
+        type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

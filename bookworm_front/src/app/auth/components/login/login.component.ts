@@ -30,11 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
-    console.log('login form', this.loginForm.value);
     const { username, password } = this.loginForm.value;
     this.authService.login(username, password).subscribe({
       next: data => {
-        console.log('data = ', data);
         this.storageService.saveSession(data);
         const roles = data.roles as string[];
         this.permissionService.loadPermissions(roles);

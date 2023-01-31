@@ -63,7 +63,11 @@
                 class="hover:bg-gray-200 p-4 hover:font-medium">
                 <a href="/auth/login" class="block">Sign in</a>
               </li>
-
+              <li
+                *ngIf="!isLoggedIn"
+                class="hover:bg-gray-200 p-4 hover:font-medium">
+                <a href="/auth/signup" class="block">Sign up</a>
+              </li>
               <li
                 *ngIf="isLoggedIn"
                 class="hover:bg-gray-200 p-4 hover:font-medium">
@@ -80,7 +84,7 @@
               <li
                 *ngxPermissionsOnly="'ROLE_ADMIN'"
                 class="hover:bg-gray-200 p-4">
-                Admin panel
+                <a routerLink="/admin" class="block">Admin panel</a>
               </li>
             </ul>
           </div>

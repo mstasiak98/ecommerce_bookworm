@@ -1,0 +1,136 @@
+<div class="w-full p-12">
+  <div class="w-full flex justify-between mb-4">
+    <h3 class="text-2xl font-bold">List of available countries</h3>
+    <button
+      (click)="openNewCountry()"
+      pButton
+      label="New"
+      icon="pi pi-plus"
+      class="p-button-success mr-2"></button>
+  </div>
+
+  <hr class="my-4" />
+  <div class="w-full">
+    <p-table
+      #dt
+      [value]="countries"
+      [(selection)]="selectedCountry"
+      dataKey="id"
+      [rowHover]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading"
+      [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [filterDelay]="0"
+      [globalFilterFields]="['code', 'name']">
+      <ng-template pTemplate="caption">
+        <div class="w-full flex justify-between">
+          <div class="table-header">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Global Search" />
+            </span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 5rem"></th>
+          <th pSortableColumn="id" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Id
+              <p-sortIcon field="id"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="name" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Name
+              <p-sortIcon field="name"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="code" style="min-width: 14rem">
+            <div class="flex justify-content-between align-items-center">
+              Code
+              <p-sortIcon field="code"></p-sortIcon>
+            </div>
+          </th>
+          <th style="width: 5rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-country let-expanded="expanded">
+        <tr class="p-selectable-row">
+          <td [pRowToggler]="country">
+            <a>
+              <i
+                [ngClass]="
+                  expanded
+                    ? 'pi pi-fw pi-chevron-circle-down'
+                    : 'pi pi-fw pi-chevron-circle-right'
+                "></i>
+            </a>
+          </td>
+          <td>
+            <span class="p-column-title">Id</span>
+            {{ country?.id }}
+          </td>
+          <td>
+            <span class="p-column-title">Name</span>
+            {{ country?.name }}
+          </td>
+          <td>
+            <span class="p-column-title">Code</span>
+            {{ country?.code }}
+          </td>
+          <td style="text-align: center">
+            <button
+              pButton
+              icon="pi pi-ellipsis-v"
+              (click)="toggleMenu(menu, $event, country)"
+              class="p-button-sm p-button-link small-menu-button"></button>
+            <p-menu
+              #menu
+              [model]="items"
+              [popup]="true"
+              appendTo="body"></p-menu>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+        <tr>
+          <td [colSpan]="5">
+            <table>
+              <thead>
+                <th>Id</th>
+                <th>Name</th>
+                <th style="width: 5rem"></th>
+              </thead>
+              <tr *ngFor="let state of rowData.states">
+                <td>{{ state.id }}</td>
+                <td>{{ state.name }}</td>
+                <td>
+                  <i
+                    (click)="deleteState($event, state.id)"
+                    class="pi pi-trash cursor-pointer"></i>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No countries found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"></p-confirmDialog>

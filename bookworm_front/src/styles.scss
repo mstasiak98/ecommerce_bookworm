@@ -13,6 +13,9 @@
   font-family: inter,Helvetica,Arial,sans-serif;
   color: #161619;
 }
+body {
+  overflow-x: hidden;
+}
 
 .inner-width {
   @apply 2xl:max-w-[1600px] w-full;
@@ -118,4 +121,27 @@ table {
     padding: 2rem;
   }
 
+}
+
+.p-datatable .p-datatable-header, .p-datatable .p-paginator-bottom {
+  border: 1px solid #eae8e4 !important;
+}
+
+.p-multiselect {
+  width: 100%;
+}
+.p-datatable .p-datatable-tbody > tr > td {
+  @apply truncate;
+}
+
+.order-details-content {
+  .p-button-label, .p-button-icon {
+    color: white !important;
+  }
+}
+
+.link-disabled {
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
 }
