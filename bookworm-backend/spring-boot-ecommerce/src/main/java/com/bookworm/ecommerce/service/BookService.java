@@ -64,8 +64,7 @@ public class BookService {
     }
 
     public Page<Book> getBooksByFormat(Long id, Long startPrice, Long endPrice, Pageable pageable) {
-        Long[] formats = {id};
-        return this.bookRepository.test(pageable);
+        return this.bookRepository.findByFormatAndPriceBetween(id, startPrice, endPrice, pageable);
     }
 
     public Book getBookById(Long id) {

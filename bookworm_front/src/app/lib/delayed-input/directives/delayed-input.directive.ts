@@ -7,14 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  debounce,
-  distinctUntilChanged,
-  fromEvent,
-  Subject,
-  takeUntil,
-  timer,
-} from 'rxjs';
+import { debounce, fromEvent, Subject, takeUntil, timer } from 'rxjs';
 
 @Directive({
   selector: '[appDelayedInput]',

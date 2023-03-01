@@ -19,8 +19,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Page<Book> findByCategoryIdAndFormatsPriceBetween(@Param("id") Long id, Long startPrice, Long endPrice, Pageable pageable);
 
-    @Query(value = "SELECT * FROM book b inner join book_format bf on bf.book_id = b.id where bf.format_id = 1", nativeQuery = true)
-    Page<Book> test(Pageable pageable);
+    @Query(value = "SELECT b FROM Book b JOIN b.formats f WHERE f.format.id = :id and f.price between :startPrice and :endPrice")
+    Page<Book> findByFormatAndPriceBetween(@Param(value = "id") Long id, @Param(value = "startPrice") Long startPrice, @Param(value = "endPrice") Long endPrice, Pageable pageable);
 
     Page<Book> findByAuthorContainingIgnoreCaseAndFormatsPriceBetween (@Param("author") String author, Long startPrice, Long endPrice, Pageable pageable);
     Page<Book> findAllByFormatsPriceBetween(Pageable pageable, Long startPrice, Long endPrice);

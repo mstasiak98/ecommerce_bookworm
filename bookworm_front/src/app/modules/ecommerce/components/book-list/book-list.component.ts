@@ -33,7 +33,7 @@ export class BookListComponent implements OnInit, OnDestroy {
         this.getBooks(keyword);
       });
     // default filter values - (max range)
-    this.currentPriceFilter = { startPrice: 0, endPrice: 100 };
+    this.currentPriceFilter = { startPrice: 5, endPrice: 100 };
 
     this.route.paramMap.subscribe(() => {
       this.getBooks();
